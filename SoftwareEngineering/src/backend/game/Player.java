@@ -26,6 +26,15 @@ public abstract class Player {
 		return false;
 	}
 	
+	public boolean pay(Player target, int amount) {
+		if (balance >= amount) {
+			balance -= amount;
+			target.paid(amount);
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean paid(int amount) {
 		balance += amount;
 		return true;
