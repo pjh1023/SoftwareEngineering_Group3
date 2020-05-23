@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import backend.game.action.Action;
 import backend.game.action.Bankrupt;
+import backend.game.action.DrawCard;
 import backend.game.action.Imprison;
 import backend.game.action.Move;
 import backend.game.action.Release;
@@ -11,9 +12,17 @@ import backend.game.action.RollDice;
 import backend.game.action.SelectPosition;
 import backend.game.action.Transaction;
 import backend.game.action.Wish2Buy;
+import backend.game.economic.Bank;
+import backend.game.economic.ConsolePlayer;
+import backend.game.economic.Economic;
+import backend.game.economic.Everyone;
+import backend.game.economic.First;
+import backend.game.economic.Last;
+import backend.game.economic.Player;
 
 public class GameManager {
 	private ArrayList<Player> players;
+	private ArrayList<Economic> economics;
 	private ArrayList<Integer> arrange;
 	private ArrayList<Integer> inverseArrange;
 	private ArrayList<Land> board;
@@ -25,6 +34,11 @@ public class GameManager {
 	
 	public GameManager(ArrayList<Player> players, ArrayList<Land> board, ArrayList<ChanceCardEvent> chanceCardList) {
 		this.players = players;
+		this.economics = new ArrayList<Economic>();
+		economics.add(new Bank());
+		economics.add(new Everyone(players));
+		economics.add(new First(players));
+		economics.add(new Last(players));
 		this.arrange = new ArrayList<Integer>();
 		this.inverseArrange= new ArrayList<Integer>();
 		for (int i=0; i < players.size();i++) { 
@@ -57,6 +71,13 @@ public class GameManager {
 	
 	public int getTurn() {
 		return this.turn;
+	}
+	
+	private Economic getEconomic(int i) {
+		if (i>=0)
+			return players.get(i);
+		else
+			return economics.get(-i - 1);
 	}
 	
 	private void nextTurn() {
@@ -176,7 +197,7 @@ public class GameManager {
 					}
 				}
 				else if (board.get(position) instanceof ChanceCard) {
-					//pass
+					next = new DrawCard();
 				}
 				step = 0;
 			}
@@ -200,29 +221,17 @@ public class GameManager {
 		}
 		else if(current instanceof Transaction) {
 			Transaction ts = (Transaction)current;
-			if (ts.getFrom() >= 0) {
-				if (players.get(ts.getFrom()).pay(ts.getAmount())) {
-					if (ts.getTo() >= 0)
-						players.get(ts.getTo()).paid(ts.getAmount());
-				}
-				else {
-					ts.setAmount(players.get(ts.getFrom()).getBalance());
-					players.get(ts.getFrom()).pay(ts.getAmount());
-					if (ts.getTo() >=0 )
-						players.get(ts.getTo()).paid(ts.getAmount());
-					next = new Bankrupt(turn);
-				}
-			}
-			else
-				if (ts.getTo() >= 0)
-					players.get(ts.getTo()).paid(ts.getAmount());
-			if (step > 0) {
+			Economic from = getEconomic(ts.getFrom());
+			Economic to = getEconomic(ts.getTo());
+			boolean result = from.pay(to, ts.getAmount());
+			if (step > 0) //salary
 				next = new Move(step);
-			}
-			else {
+			else if(result) {
 				nextTurn();
 				next = new RollDice();
-			}				
+			}
+			else 
+				next = new Bankrupt(ts.getFrom());
 		}
 		else if(current instanceof SelectPosition) {
 			int destination = players.get(turn).where2go();
@@ -230,6 +239,23 @@ public class GameManager {
 			if (step < 0)
 				step += board.size();
 			next = new Move(step);
+		}
+		else if(current instanceof DrawCard) {
+			int selection = players.get(turn).drawCard(chanceCardList.size());
+			ChanceCardEvent cce = chanceCardList.get(selection);
+			int from, to, amount;
+			if (cce.getFrom() == ChanceCardEvent.Direction.Self)
+				from = turn;
+			else 
+				from = cce.getFrom().getValue();
+			
+			if (cce.getTo() == ChanceCardEvent.Direction.Self)
+				to = turn;
+			else 
+				to = cce.getTo().getValue();
+			
+			amount = cce.getAmount();
+			next = new Transaction(from, to, amount);
 		}
 		else if(current instanceof Bankrupt) {
 			nextTurn();
@@ -267,10 +293,10 @@ public class GameManager {
 	public static void test() {
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (int i=0;i<4;i++)
-			players.add(new ConsolePlayer(100000));
+			players.add(new ConsolePlayer(15000));
 		ArrayList<Land> board = new ArrayList<Land>();
 		board.add(new Start("start ", 200));
-		for (int i=0;i<10;i++) {
+		for (int i=0;i<8;i++) {
 			ArrayList<Integer> price = new ArrayList<Integer>();
 			ArrayList<Integer> tollFee = new ArrayList<Integer>();
 			for (int j=1;j<=4;j++) {
@@ -281,7 +307,14 @@ public class GameManager {
 		}
 		board.add(new Prison("Prison"));
 		board.add(new Travel("Travel"));
-		GameManager gm = new GameManager(players, board, null);
+		board.add(new ChanceCard("C-Card"));
+		ArrayList<ChanceCardEvent> deck = new ArrayList<ChanceCardEvent>();
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, ""));
+		GameManager gm = new GameManager(players, board, deck);
 		while(true) {
 			printBoard(gm.getTurn(), gm.getPlayers(), gm.getBoard(), gm.getArrange(), gm.getInverseArrange());
 			gm.getAction();

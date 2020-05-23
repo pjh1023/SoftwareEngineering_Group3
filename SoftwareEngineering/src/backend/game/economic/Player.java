@@ -1,15 +1,15 @@
-package backend.game;
+package backend.game.economic;
 
-public abstract class Player {
+public abstract class Player implements Economic{
 	private int balance;
 	private int doubleCount;
 	private int prisonCount;
 	private int position;
 	
-	abstract int rollDice();
-	abstract boolean wish2trade(int landNum);
-	abstract int where2go();
-	abstract int drawCard(int range);
+	abstract public int rollDice();
+	abstract public boolean wish2trade(int landNum);
+	abstract public int where2go();
+	abstract public int drawCard(int range);
 	
 	protected Player(int balance) {
 		this.balance = balance;
@@ -18,36 +18,21 @@ public abstract class Player {
 		this.position = 0;
 	}
 	
-	public boolean pay(int amount) {
-		if (balance >= amount) {
-			balance -= amount;
-			return true;
-		}
-		return false;
+	public boolean pay(Economic to, int amount) {
+		int sum = to.paid(amount);// balance -= to.paid(amount) ==> bug
+		balance -= sum;
+		return balance > 0;
 	}
 	
-	public boolean pay(Player target, int amount) {
-		if (balance >= amount) {
-			balance -= amount;
-			target.paid(amount);
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean paid(int amount) {
+	public int paid(int amount) {
 		balance += amount;
-		return true;
+		return amount;
 	}
 	
 	public int getBalance() {
 		return this.balance;
 	}
-	
-	public int getDoubleCount() {
-		return this.doubleCount;
-	}
-	
+
 	public boolean isImprisoned() {
 		return prisonCount != 0;
 	}
@@ -68,5 +53,9 @@ public abstract class Player {
 	public int move(int distance) {
 		this.position += distance;
 		return position;
+	}
+	
+	public boolean isBankrupt() {
+		return balance <= 0;
 	}
 }
