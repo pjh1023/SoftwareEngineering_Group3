@@ -8,6 +8,7 @@ import backend.game.action.DrawCard;
 import backend.game.action.Imprison;
 import backend.game.action.Move;
 import backend.game.action.Release;
+import backend.game.action.Result;
 import backend.game.action.RollDice;
 import backend.game.action.SelectPosition;
 import backend.game.action.Transaction;
@@ -145,7 +146,7 @@ public class GameManager {
 				if (first == second) 
 					next = new Release();
 				else 
-					next = new Imprison();
+					next = new Imprison(false);
 			}
 			else {
 				step = first + second;
@@ -176,7 +177,7 @@ public class GameManager {
 				if (board.get(position) instanceof Prison) {
 					System.out.println("Prison");
 					players.get(turn).imprison();
-					next = new Imprison();
+					next = new Imprison(true);
 				}
 				else if (board.get(position) instanceof Travel) {
 					next = new SelectPosition();
@@ -258,8 +259,17 @@ public class GameManager {
 			next = new Transaction(from, to, amount);
 		}
 		else if(current instanceof Bankrupt) {
-			nextTurn();
-			next = new RollDice();
+			int countAlive = 0;
+			for (Player p : players) 
+				if (!p.isBankrupt()) countAlive++;
+			if (countAlive == 0)
+				next = new Result(true);
+			else if(countAlive == 1)
+				next = new Result(false);
+			else {
+				nextTurn();
+				next = new RollDice();
+			}			
 		}
 		return current;
 	}
