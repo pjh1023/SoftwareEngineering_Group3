@@ -1,4 +1,4 @@
-package backend.game;
+package backend.game.economic;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ public class ConsolePlayer extends Player {
 	}
 	
 	@Override
-	int rollDice() {
+	public int rollDice() {
 		System.out.print("Roll Dice: ");
 		int first = sc.nextInt();
 		int second = sc.nextInt();
@@ -19,7 +19,7 @@ public class ConsolePlayer extends Player {
 	}
 
 	@Override
-	boolean wish2trade(int landNum) {
+	public boolean wish2trade(int landNum) {
 		System.out.print("Wish2trade? (0/1): ");
 		int choice = sc.nextInt();
 		return choice == 1;
@@ -27,14 +27,15 @@ public class ConsolePlayer extends Player {
 	}
 
 	@Override
-	int where2go() {
+	public int where2go() {
 		System.out.print("Where2go?: ");
 		int choice = sc.nextInt();
 		return choice;
 	}
 
 	@Override
-	int drawCard(int range) {
+	public int drawCard(int range) {
+		System.out.printf("Select card in range(%d):", range);
 		int choice = sc.nextInt();
 		return choice;
 	}
