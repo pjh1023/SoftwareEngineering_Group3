@@ -1,13 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.PrintWriter;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 class Board extends Canvas implements MouseListener  {
-	
-	int [][]map;
 	int color;
 	boolean enable = false;
 
@@ -15,9 +12,6 @@ class Board extends Canvas implements MouseListener  {
 	Graphics gImg = null;
 	
 	public Board() {
-		map = new int[size+2][];
-		for(int i=0; i<map.length; i++)
-			map[i] = new int[size + 2];
 		
 		addMouseListener(this);
 	}
