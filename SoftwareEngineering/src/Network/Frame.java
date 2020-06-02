@@ -180,8 +180,6 @@ public class Frame extends JFrame implements ActionListener{
 			
 			try {
 				out = new DataOutputStream(socket.getOutputStream());
-				//this.name = name;
-				//id = socket.getInetAddress()+":"+socket.getPort();
 			} catch(Exception e) {}
 		}
 		
