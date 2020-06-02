@@ -144,7 +144,7 @@ public class Frame extends JFrame implements ActionListener{
 		JPanel jp31 = new JPanel();
 		jp3.setLayout(new BorderLayout());
 		jp3.add(chating,"Center");	//채팅내용이 띄워짐 
-		jp31.add(sendBox);	//내가 작성하고있는 채팅 창 
+		jp31.add(sendBox);		//내가 작성하고있는 채팅 창 
 		jp31.add(send);
 		jp3.add(jp31,"South");
 		jp3.setBounds(500,300,250,250);
@@ -223,18 +223,6 @@ public class Frame extends JFrame implements ActionListener{
 						String str[] = message.split(",");
 						chat_out(str[1]+str[2]);
 					}
-					/*
-					else if(message.contains("[Stone]")) {
-						String str[] = message.split(",");
-						int x = Integer.parseInt(str[1]);
-						int y = Integer.parseInt(str[2]);
-						int color = Integer.parseInt(str[3]);
-						String nickname = str[4];
-						
-						if(!nickname.equals(Main.nickname)) {
-							board.setEnabled(true);
-						}
-					}*/
 					else if(message.contains("[Ready]")) {
 						String str[] = message.split(",");
 						String nickname = str[1];
