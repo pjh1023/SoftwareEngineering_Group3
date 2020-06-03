@@ -70,6 +70,9 @@ public class LoginFramePanel extends JPanel implements ActionListener{
 			// login Success
 			Frame.Main.loginFrame.logPanel.setVisible(false);
 			Frame.Main.loginFrame.remove(Frame.Main.loginFrame.logPanel);
+			Frame.Main.loginFrame.dispose();
+			Frame.Main.waitingFrame = new Frame.WaitingFrame(); //대기방으로 넘어가기 
+			Frame.Main.waitingFrame.setThis();
 //			Frame.Main.loginFrame.add(Frame.Main.loginFrame.mainPanel);
 			
 			// login False
