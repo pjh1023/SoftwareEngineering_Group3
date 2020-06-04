@@ -54,16 +54,16 @@ public class GameManager {
 		step = -1;
 	}
 	
-	public ArrayList<Player> getPlayers(){
-		return this.players;
+	public Player getTurnPlayer(){
+		return this.players.get(this.turn);
 	}
 	
 	public ArrayList<Land> getBoard(){
 		return this.board;
 	}
 	
-	public ArrayList<Integer> getArrange(){
-		return this.arrange;
+	public int getOriginN(int arranged){
+		return arrange.get(arranged);
 	}
 	
 	public ArrayList<Integer> getInverseArrange(){
@@ -146,7 +146,7 @@ public class GameManager {
 				if (first == second) 
 					next = new Release();
 				else 
-					next = new Imprison(false);
+					next = new Imprison(turn, false);
 			}
 			else {
 				step = first + second;
@@ -177,7 +177,7 @@ public class GameManager {
 				if (board.get(position) instanceof Prison) {
 					System.out.println("Prison");
 					players.get(turn).imprison();
-					next = new Imprison(true);
+					next = new Imprison(turn, true);
 				}
 				else if (board.get(position) instanceof Travel) {
 					next = new SelectPosition();
@@ -274,7 +274,7 @@ public class GameManager {
 		return current;
 	}
 	
-	
+/*
 	private static void printBoard(int turn, ArrayList<Player> players, ArrayList<Land> board, ArrayList<Integer> arrange, ArrayList<Integer> inverse) {
 		if (turn < 0) return;
 		for (int i=0; i < board.size(); i++) {
@@ -322,13 +322,14 @@ public class GameManager {
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 300, ""));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 300, ""));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, ""));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 200000, ""));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, ""));
+		
 		GameManager gm = new GameManager(players, board, deck);
 		while(true) {
-			printBoard(gm.getTurn(), gm.getPlayers(), gm.getBoard(), gm.getArrange(), gm.getInverseArrange());
+			printBoard(gm.getTurn(), gm.getPlayers(), gm.getBoard(), gm.getOriginN(), gm.getInverseArrange());
 			gm.getAction();
 		}
-		
 	}
+*/
 }
