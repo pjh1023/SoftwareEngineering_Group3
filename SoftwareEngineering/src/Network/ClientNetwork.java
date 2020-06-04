@@ -15,6 +15,7 @@ public class ClientNetwork {
 	public static ClientSender cs ;
 	Socket socket;
 	boolean isReady;
+	public static int userID; 
 	
 	
 	
@@ -135,6 +136,11 @@ public class ClientNetwork {
 							System.out.println("Existing Nickname");
 							
 						}
+					}
+					else if(message.contains("[Register]")) {
+						String str[] = message.split(",");
+						userID = Integer.parseInt(str[2]);
+						System.out.println("Successfully registered");
 					}
 				}catch(IOException e) {}
 				

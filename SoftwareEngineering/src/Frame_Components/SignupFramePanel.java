@@ -59,16 +59,15 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().toString().contains("text=Register")) {
-			
-			
-			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+			ClientSender.sendMsg("[Register],"+Network.ClientNetwork.userID+","+signupTypePanel.idTextF.getText()+","+String.valueOf(signupTypePanel.pwTextF.getPassword())+","+signupTypePanel.nickNameTextF.getText());			
+//			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
 		}
 		else if(e.getSource().toString().contains("text=ID check")) {
-			ClientSender.sendMsg("[IdCheck],1,"+signupTypePanel.idTextF.getText());
+			ClientSender.sendMsg("[IdCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.idTextF.getText());
 		}
 		else if(e.getSource().toString().contains("text=Nick check")) {
-			ClientSender.sendMsg("[NickCheck],1,"+signupTypePanel.nickNameTextF.getText());
+			ClientSender.sendMsg("[NickCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.nickNameTextF.getText());
 		}
 	}
 }

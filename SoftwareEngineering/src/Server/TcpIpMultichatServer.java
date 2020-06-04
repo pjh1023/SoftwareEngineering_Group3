@@ -80,13 +80,18 @@ public class TcpIpMultichatServer {
 						String str[] = mssg.split(",");
 						sendToAll(str[0]+","+str[1]+","+loginCheck(str[2],str[3],socket.getInetAddress()+":"+socket.getPort()));
 					}
-					else if(mssg.startsWith("IdCheck")) {
+					else if(mssg.startsWith("[IdCheck]")) {
 						String str[] = mssg.split(",");
 						sendToAll(str[0]+","+str[1]+","+idRedunCheck(str[2]));
 					}
-					else if(mssg.startsWith("NickCheck")) {
+					else if(mssg.startsWith("[NickCheck]")) {
 						String str[] = mssg.split(",");
 						sendToAll(str[0]+","+str[1]+","+nickRedunCheck(str[2]));
+					}
+					else if(mssg.startsWith("[Register]")) {
+						String str[] = mssg.split(",");
+						Object[] info = {str[2],str[3],str[4]};
+						sendToAll(str[0]+","+str[1]+","+signupUser(info));
 					}
 				}
 			} catch(IOException e) {}
@@ -103,11 +108,16 @@ public class TcpIpMultichatServer {
 	public static boolean loginCheck(String id, String pw, String ip) {
 		return Server.LoginDB.checkLogin(id, pw, ip);
 	}
+	/////////////////////// Sign up /////////////////////////
 	public static boolean idRedunCheck(String id) {
 		return Server.LoginDB.checkRedundantId(id);
 	}
 	public static boolean nickRedunCheck(String nick) {
 		return Server.LoginDB.checkRedundantNick(nick);
+	}
+	public static int signupUser(Object[] info) {
+		Server.LoginDB.addUser(info);
+		return Server.LoginDB.getUserID((String) info[0]);
 	}
 	
 }
