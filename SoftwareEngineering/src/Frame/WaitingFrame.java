@@ -45,6 +45,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	public static JLabel rank5 = new JLabel(".5.\tUSER\twins: 0 loses: 0 | win rate:  0%");
 	
 	public static GameFrame gameFrame = new GameFrame();
+	public static ChatFrame chatFrame = new ChatFrame();
 	
 	//Frame components 
 	//public Frame_Components.WaitingFramePanel waitPanel = new Frame_Components.WaitingFramePanel();
@@ -185,7 +186,9 @@ public class WaitingFrame extends JFrame implements ActionListener {
 		this.dispose();
     	gameFrame.setThis();
     	//chat Frame enable over here
-    	
+    	gameFrame.setThis();
+    	chatFrame.setThis();
+    	chatFrame.setVisible(true);
     }
  
 }

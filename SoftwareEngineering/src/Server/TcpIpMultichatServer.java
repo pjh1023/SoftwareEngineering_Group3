@@ -12,7 +12,6 @@ import java.util.Iterator;
 
 public class TcpIpMultichatServer {
 	static HashMap clients;
-	
 	TcpIpMultichatServer(){
 		clients = new HashMap();
 		Collections.synchronizedMap(clients);
@@ -30,7 +29,7 @@ public class TcpIpMultichatServer {
 				ServerReceiver thread = new ServerReceiver(socket);
 				thread.start();
 			}
-            
+         
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -46,6 +45,16 @@ public class TcpIpMultichatServer {
 			}catch(IOException e) {}
 		}
 	}
+	static void sendToOne(String msg, String id) {
+		try {
+			DataOutputStream out = (DataOutputStream)clients.get(id);
+			out.writeUTF(msg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	
 	public static void main(String args[]) {
 		DB database = DB.getInstance();
@@ -66,17 +75,20 @@ public class TcpIpMultichatServer {
 		}
 		
 		public void run() {
-			 
+			String id = "";
 			try { 
+//				name = in.readUTF();
+//				sendToAll("#"+name+"님이 들어오셨습니다.");
+//				clients.put(name, out);
 				clients.put(socket.getPort(), out);
-				//clients.put(name, out);
 				System.out.println("현재 접속자 수는 "+clients.size()+"명 입니다. ");	
 				
 				while(in !=null) {
 					String mssg = in.readUTF(); // message format: [type],[user#],content1,content2,...
-					
+			
 					if(mssg.startsWith("[Msg]"))
 						sendToAll(mssg);
+//						sendToOne(mssg, "test1");
 					else if(mssg.startsWith("[Login]")) {
 						String str[] = mssg.split(",");
 						sendToAll(str[0]+","+str[1]+","+loginCheck(str[2],str[3],socket.getInetAddress()+":"+socket.getPort()));
@@ -100,6 +112,7 @@ public class TcpIpMultichatServer {
 				}
 			} catch(IOException e) {}
 				finally { 
+//					sendToAll("#"+id+"님이 나가셨습니다.");
 					clients.remove(socket.getPort());
 					System.out.println("["+socket.getInetAddress()+":"+socket.getPort()+"]"+"에서 접속종료");
 					System.out.println("현재 접속자수는 "+clients.size());
@@ -107,7 +120,7 @@ public class TcpIpMultichatServer {
 		} 
 	}
 	
-	
+
 	/////////////////////// Log In /////////////////////////
 	public static boolean loginCheck(String id, String pw, String ip) {
 		return Server.LoginDB.checkLogin(id, pw, ip);
