@@ -2,16 +2,12 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Random;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 public class Dice extends JPanel {
-	
-	Random rnd = new Random();
-	int faceValue = 1;
+	private int faceValue = 1;
 	
 	public Dice(int xCoord, int yCoord, int width, int height) {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -54,15 +50,11 @@ public class Dice extends JPanel {
 	}
 	
 
-	public void rollDice(){
-		faceValue = rnd.nextInt(6) + 1;
+	public void setDice(int v){
+		faceValue = v;
 		repaint();
 	}
-	
-	public int getFaceValue(){
-		return faceValue;
-	}
-	
+
 	public Dice(int xCoord, int yCoord, int width, int height, String labelString) {
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setBounds(xCoord, yCoord, width, height);

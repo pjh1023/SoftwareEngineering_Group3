@@ -14,7 +14,6 @@ import backend.game.action.SelectPosition;
 import backend.game.action.Transaction;
 import backend.game.action.Wish2Buy;
 import backend.game.economic.Bank;
-import backend.game.economic.ConsolePlayer;
 import backend.game.economic.Economic;
 import backend.game.economic.Everyone;
 import backend.game.economic.First;
@@ -54,16 +53,16 @@ public class GameManager {
 		step = -1;
 	}
 	
-	public ArrayList<Player> getPlayers(){
-		return this.players;
+	public Player getTurnPlayer(){
+		return this.players.get(this.turn);
 	}
 	
 	public ArrayList<Land> getBoard(){
 		return this.board;
 	}
 	
-	public ArrayList<Integer> getArrange(){
-		return this.arrange;
+	public int getOriginN(int arranged){
+		return arrange.get(arranged);
 	}
 	
 	public ArrayList<Integer> getInverseArrange(){
@@ -146,7 +145,7 @@ public class GameManager {
 				if (first == second) 
 					next = new Release();
 				else 
-					next = new Imprison(false);
+					next = new Imprison(turn, false);
 			}
 			else {
 				step = first + second;
@@ -177,7 +176,7 @@ public class GameManager {
 				if (board.get(position) instanceof Prison) {
 					System.out.println("Prison");
 					players.get(turn).imprison();
-					next = new Imprison(true);
+					next = new Imprison(turn, true);
 				}
 				else if (board.get(position) instanceof Travel) {
 					next = new SelectPosition();
@@ -224,15 +223,15 @@ public class GameManager {
 			Transaction ts = (Transaction)current;
 			Economic from = getEconomic(ts.getFrom());
 			Economic to = getEconomic(ts.getTo());
-			boolean result = from.pay(to, ts.getAmount());
+			int result = from.pay(to, ts.getAmount());
 			if (step > 0) //salary
 				next = new Move(step);
-			else if(result) {
+			else if(result == 0) {
 				nextTurn();
 				next = new RollDice();
 			}
 			else 
-				next = new Bankrupt(ts.getFrom());
+				next = new Bankrupt(result);
 		}
 		else if(current instanceof SelectPosition) {
 			int destination = players.get(turn).where2go();
@@ -274,7 +273,7 @@ public class GameManager {
 		return current;
 	}
 	
-	
+/*
 	private static void printBoard(int turn, ArrayList<Player> players, ArrayList<Land> board, ArrayList<Integer> arrange, ArrayList<Integer> inverse) {
 		if (turn < 0) return;
 		for (int i=0; i < board.size(); i++) {
@@ -322,13 +321,14 @@ public class GameManager {
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 300, ""));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 300, ""));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, ""));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 200000, ""));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, ""));
+		
 		GameManager gm = new GameManager(players, board, deck);
 		while(true) {
-			printBoard(gm.getTurn(), gm.getPlayers(), gm.getBoard(), gm.getArrange(), gm.getInverseArrange());
+			printBoard(gm.getTurn(), gm.getPlayers(), gm.getBoard(), gm.getOriginN(), gm.getInverseArrange());
 			gm.getAction();
 		}
-		
 	}
+*/
 }

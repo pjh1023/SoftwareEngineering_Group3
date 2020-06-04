@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator; 
@@ -93,6 +94,9 @@ public class TcpIpMultichatServer {
 						Object[] info = {str[2],str[3],str[4]};
 						sendToAll(str[0]+","+str[1]+","+signupUser(info));
 					}
+					else if(mssg.startsWith("[TopRank]")) {
+						sendToAll(mssg+","+getTopRank());
+					}
 				}
 			} catch(IOException e) {}
 				finally { 
@@ -118,6 +122,17 @@ public class TcpIpMultichatServer {
 	public static int signupUser(Object[] info) {
 		Server.LoginDB.addUser(info);
 		return Server.LoginDB.getUserID((String) info[0]);
+	}
+	/////////////////////// Ranking /////////////////////////
+	public static String getTopRank() {
+		ArrayList<String> top5 = Server.RankDB.getTop5(); // nick,win,lose,rate
+		String toplist = "";
+		for(int i=0; i<top5.size()/4; i++) {
+			for(int j=0;j<4;j++)
+				toplist+=(top5.get(4*i+j)+"/");
+			toplist+=",";
+		}
+		return toplist;
 	}
 	
 }
