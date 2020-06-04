@@ -1,3 +1,5 @@
+package Server;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class TcpIpMultichatServer {
 		ServerSocket serverSocket = null;
 		Socket socket = null;
 		try {
-			serverSocket = new ServerSocket(7777);
+			serverSocket = new ServerSocket(7778);
 			System.out.println("server start");  
 			
 			while(true) {
@@ -45,6 +47,7 @@ public class TcpIpMultichatServer {
 	}
 	
 	public static void main(String args[]) {
+		DB database = DB.getInstance();
 		new TcpIpMultichatServer().start();
 	} 
 	
@@ -69,7 +72,27 @@ public class TcpIpMultichatServer {
 				System.out.println("현재 접속자 수는 "+clients.size()+"명 입니다. ");	
 				
 				while(in !=null) {
-					sendToAll(in.readUTF()); 
+					String mssg = in.readUTF(); // message format: [type],[user#],content1,content2,...
+					
+					if(mssg.startsWith("[Msg]"))
+						sendToAll(mssg);
+					else if(mssg.startsWith("[Login]")) {
+						String str[] = mssg.split(",");
+						sendToAll(str[0]+","+str[1]+","+loginCheck(str[2],str[3],socket.getInetAddress()+":"+socket.getPort()));
+					}
+					else if(mssg.startsWith("[IdCheck]")) {
+						String str[] = mssg.split(",");
+						sendToAll(str[0]+","+str[1]+","+idRedunCheck(str[2]));
+					}
+					else if(mssg.startsWith("[NickCheck]")) {
+						String str[] = mssg.split(",");
+						sendToAll(str[0]+","+str[1]+","+nickRedunCheck(str[2]));
+					}
+					else if(mssg.startsWith("[Register]")) {
+						String str[] = mssg.split(",");
+						Object[] info = {str[2],str[3],str[4]};
+						sendToAll(str[0]+","+str[1]+","+signupUser(info));
+					}
 				}
 			} catch(IOException e) {}
 				finally { 
@@ -78,6 +101,23 @@ public class TcpIpMultichatServer {
 					System.out.println("현재 접속자수는 "+clients.size());
 				} 
 		} 
+	}
+	
+	
+	/////////////////////// Log In /////////////////////////
+	public static boolean loginCheck(String id, String pw, String ip) {
+		return Server.LoginDB.checkLogin(id, pw, ip);
+	}
+	/////////////////////// Sign up /////////////////////////
+	public static boolean idRedunCheck(String id) {
+		return Server.LoginDB.checkRedundantId(id);
+	}
+	public static boolean nickRedunCheck(String nick) {
+		return Server.LoginDB.checkRedundantNick(nick);
+	}
+	public static int signupUser(Object[] info) {
+		Server.LoginDB.addUser(info);
+		return Server.LoginDB.getUserID((String) info[0]);
 	}
 	
 }

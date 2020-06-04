@@ -1,7 +1,5 @@
-package Database;
+package Server;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,24 +44,14 @@ public class LoginDB {
 		}
 	}
     		
-	public boolean checkLogin(String id, String pw) { // check ID & PW for login, log history if success 
+	public static boolean checkLogin(String id, String pw, String ip) { // check ID & PW for login, log history if success 
 		Statement st = null;
 		ResultSet result = null;
 		String sql = "SELECT * FROM users WHERE ID='"+id+"' AND PW='" + pw + "'";
 		
 		Statement history_stmt = null;
-
-		InetAddress local;
-		String UserIP = null;		
 		
-		try {
-		    local = InetAddress.getLocalHost();
-		    UserIP = local.getHostAddress();
-		} catch (UnknownHostException e1) {
-		    e1.printStackTrace();
-		}
-		
-		String history_sql = "INSERT INTO log (userID, datetime, loginIP) VALUES('"+ getUserID(id) +"', now(), '"+UserIP+"')";
+		String history_sql = "INSERT INTO log (userID, datetime, loginIP) VALUES('"+ getUserID(id) +"', now(), '"+ip+"')";
     		
     	try {
 			st = DB.getInstance().getConnection().createStatement();
@@ -86,7 +74,7 @@ public class LoginDB {
 	}
 	
 	
-	public boolean checkRedundantId(String id) { // check for redundant ID for sign up
+	public static boolean checkRedundantId(String id) { // check for redundant ID for sign up
 		Statement st = null;
 		ResultSet result = null;
 
@@ -103,7 +91,7 @@ public class LoginDB {
     	return false;
 	}
 	
-	public boolean checkRedundantNick(String nickname) { // check for redundant NickName for sign up & update
+	public static boolean checkRedundantNick(String nickname) { // check for redundant NickName for sign up & update
 		Statement st = null;
 		ResultSet result = null;
 

@@ -6,9 +6,10 @@ public class Main {
 	public static WaitingFrame waitingFrame = new WaitingFrame();
 
 	public static GameFrame gameFrame = new GameFrame();
-	
+	static Network.ClientNetwork network = new Network.ClientNetwork();
 	
 	public static void main(String[] args) {
+		network.connect("1234");
 		loginFrame.setThis();
 	}
 }
