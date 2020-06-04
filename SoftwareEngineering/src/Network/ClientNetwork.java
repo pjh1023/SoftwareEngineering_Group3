@@ -119,10 +119,20 @@ public class ClientNetwork {
 					else if(message.contains("[IdCheck]")) {
 						String str[] = message.split(",");
 						if(str[2].equals("true")) {
-							
+							System.out.println("Available ID");
 						}
 						else {
 							System.out.println("Existing ID");
+							
+						}
+					}
+					else if(message.contains("[NickCheck]")) {
+						String str[] = message.split(",");
+						if(str[2].equals("true")) {
+							System.out.println("Available Nickname");
+						}
+						else {
+							System.out.println("Existing Nickname");
 							
 						}
 					}

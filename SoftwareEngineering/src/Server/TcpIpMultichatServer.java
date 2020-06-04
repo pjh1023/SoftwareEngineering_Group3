@@ -84,6 +84,10 @@ public class TcpIpMultichatServer {
 						String str[] = mssg.split(",");
 						sendToAll(str[0]+","+str[1]+","+idRedunCheck(str[2]));
 					}
+					else if(mssg.startsWith("NickCheck")) {
+						String str[] = mssg.split(",");
+						sendToAll(str[0]+","+str[1]+","+nickRedunCheck(str[2]));
+					}
 				}
 			} catch(IOException e) {}
 				finally { 
@@ -101,6 +105,9 @@ public class TcpIpMultichatServer {
 	}
 	public static boolean idRedunCheck(String id) {
 		return Server.LoginDB.checkRedundantId(id);
+	}
+	public static boolean nickRedunCheck(String nick) {
+		return Server.LoginDB.checkRedundantNick(nick);
 	}
 	
 }

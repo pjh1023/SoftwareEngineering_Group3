@@ -67,5 +67,8 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 		else if(e.getSource().toString().contains("text=ID check")) {
 			ClientSender.sendMsg("[IdCheck],1,"+signupTypePanel.idTextF.getText());
 		}
+		else if(e.getSource().toString().contains("text=Nick check")) {
+			ClientSender.sendMsg("[NickCheck],1,"+signupTypePanel.nickNameTextF.getText());
+		}
 	}
 }
