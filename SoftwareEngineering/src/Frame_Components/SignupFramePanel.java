@@ -47,28 +47,28 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 		regButton.setText("Register");
 		regButton.setFont(signupTypePanel.font);
 		regButton.setBorderPainted(true);
-		regButton.setBounds(signupTypePanel.getX()-5, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
+		regButton.setBounds(signupTypePanel.getX()-10, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
 		regButton.addActionListener(this);
 		regButton.setEnabled(false);
 		
 		canButton.setText("Cancel");
 		canButton.setFont(signupTypePanel.font);
 		canButton.setBorderPainted(true);
-		canButton.setBounds(signupTypePanel.getX()-5+signupTypePanel.getWidth() / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
+		canButton.setBounds(signupTypePanel.getX()-10+signupTypePanel.getWidth() / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
 		canButton.addActionListener(this);
 		
 		idCheckButton.setText("ID check");
 		idCheckButton.setFont(signupTypePanel.font);
 		idCheckButton.setBorderPainted(true);
 		idCheckButton.setSize(this.getPreferredSize().getSize());
-		idCheckButton.setBounds(signupTypePanel.getX()-5+signupTypePanel.getWidth() *2 / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
+		idCheckButton.setBounds(signupTypePanel.getX()-10+signupTypePanel.getWidth() *2 / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
 		idCheckButton.addActionListener(this);
 		
 		nickCheckButton.setText("Nick Check");
 		nickCheckButton.setFont(signupTypePanel.font);
 		nickCheckButton.setBorderPainted(true);
 		nickCheckButton.setSize(this.getPreferredSize().getSize());
-		nickCheckButton.setBounds(signupTypePanel.getX()-5+signupTypePanel.getWidth() *3 / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() *1 / 3, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
+		nickCheckButton.setBounds(signupTypePanel.getX()-10+signupTypePanel.getWidth() *3 / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() *1 / 3, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
 		nickCheckButton.addActionListener(this);
 		
 		notice.setText("");
