@@ -5,9 +5,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class GameFramePanel extends JPanel { //implements ActionListener{
 	
@@ -35,7 +34,7 @@ public class GameFramePanel extends JPanel { //implements ActionListener{
 		this.setLayout(new BorderLayout());
 		setComponents();
 		addComponents();
-		
+
 	}
 
 	public void setComponents() {
