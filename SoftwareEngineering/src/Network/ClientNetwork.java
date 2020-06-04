@@ -1,5 +1,6 @@
 package Network;
 
+import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -125,21 +126,43 @@ public class ClientNetwork {
 					else if(message.contains("[IdCheck]")) {
 						String str[] = message.split(",");
 						if(str[2].equals("true")) {
+							Frame_Components.SignupFramePanel.iCheckResult = true;
+							Frame_Components.SignupFramePanel.notice.setText("Available ID :)");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
 							System.out.println("Available ID");
 						}
 						else {
+							Frame_Components.SignupFramePanel.iCheckResult = false;
+							Frame_Components.SignupFramePanel.notice.setText("Invalid ID");
+							Frame_Components.SignupFramePanel.notice.setForeground(Color.red);
 							System.out.println("Existing ID");
-							
+						}
+						
+						if(Frame_Components.SignupFramePanel.iCheckResult&&Frame_Components.SignupFramePanel.nCheckResult) {
+							Frame_Components.SignupFramePanel.notice.setText("Register Enable!");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
+							Frame_Components.SignupFramePanel.regButton.setEnabled(true);
 						}
 					}
 					else if(message.contains("[NickCheck]")) {
 						String str[] = message.split(",");
 						if(str[2].equals("true")) {
+							Frame_Components.SignupFramePanel.nCheckResult = true;
+							Frame_Components.SignupFramePanel.notice.setText("Available Nickname :)");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
 							System.out.println("Available Nickname");
 						}
 						else {
+							Frame_Components.SignupFramePanel.nCheckResult = false;
+							Frame_Components.SignupFramePanel.notice.setText("Invalid Nickname");
+							Frame_Components.SignupFramePanel.notice.setForeground(Color.red);
 							System.out.println("Existing Nickname");
-							
+						}
+						
+						if(Frame_Components.SignupFramePanel.iCheckResult&&Frame_Components.SignupFramePanel.nCheckResult) {
+							Frame_Components.SignupFramePanel.notice.setText("Register Enable!");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
+							Frame_Components.SignupFramePanel.regButton.setEnabled(true);
 						}
 					}
 					else if(message.contains("[Register]")) {
@@ -148,7 +171,6 @@ public class ClientNetwork {
 						System.out.println("Successfully registered");
 					}
 					else if(message.contains("[TopRank]")) { // received format: nick/wins/loses/rate,nick/wins/loses/rate,...
-						System.out.println(message);
 						String str[] = message.split(",");
 						ArrayList<String> top5 = new ArrayList<String>();
 						for(int i=2; i<str.length; i++) {
