@@ -11,7 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+
 import Frame.SignupFrame;
+
+import Network.ClientNetwork.ClientSender;
+
 
 public class SignupFramePanel extends JPanel implements ActionListener{
 	public SignupFrameTypePanel signupTypePanel = new SignupFrameTypePanel();
@@ -24,7 +28,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 	public boolean iCheckResult = false;
 	JFrame sf;
 	
-	//temp check button 입니다
+	
 	private JButton changeBtn = new JButton();
 	
 	
@@ -57,7 +61,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 		canButton.setBounds(signupTypePanel.getX()-10+signupTypePanel.getWidth() / 4, signupTypePanel.getY() + signupTypePanel.getHeight() + Frame.SignupFrame.marginHeight, signupTypePanel.getWidth() / 4, this.getFont().getSize() +  Frame.SignupFrame.marginHeight);
 		canButton.addActionListener(this);
 		
-		idCheckButton.setText("ID check");
+		idCheckButton.setText("ID Check");
 		idCheckButton.setFont(signupTypePanel.font);
 		idCheckButton.setBorderPainted(true);
 		idCheckButton.setSize(this.getPreferredSize().getSize());
@@ -73,7 +77,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 		
 		notice.setText("");
 		notice.setFont(signupTypePanel.font);
-		notice.setBounds(120, 250,200,20);
+		notice.setBounds(180, 250,200,20);
 		
 		
 		////state change btn
@@ -94,6 +98,10 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().toString().contains("text=Register")) {
+
+			ClientSender.sendMsg("[Register],"+Network.ClientNetwork.userID+","+signupTypePanel.idTextF.getText()+","+String.valueOf(signupTypePanel.pwTextF.getPassword())+","+signupTypePanel.nickNameTextF.getText());			
+//			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+			
 			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Welcome!");
 			sf.dispose();
@@ -102,7 +110,11 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 			System.out.println("Good Bye");
 			sf.dispose();
 		}
-		if (e.getSource().toString().contains("text=ID")) {
+		if (e.getSource().toString().contains("text=ID Check")) {
+			
+			ClientSender.sendMsg("[IdCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.idTextF.getText());
+			
+			
 			if(iCheckResult) {
 				System.out.println("ID Complete");
 				notice.setText("ID Check Complete");
@@ -120,7 +132,10 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 				regButton.setEnabled(true);
 			}
 		}
-		if (e.getSource().toString().contains("text=Nick")) {
+		if (e.getSource().toString().contains("text=Nick Check")) {
+			
+			ClientSender.sendMsg("[NickCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.nickNameTextF.getText());
+			
 			if(nCheckResult) {
 				System.out.println("Nick Complete");
 				notice.setText("Nick Check Complete");
@@ -150,6 +165,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 			
 			
 			System.out.println("state changed");
+
 		}
 	}
 }
