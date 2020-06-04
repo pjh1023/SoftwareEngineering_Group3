@@ -37,6 +37,12 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	private Font headFont2 = new Font ("Arial", Font.BOLD, frameHeight / 20);
 	public JPanel Ranking = new JPanel();
 	private JLabel RankTitle = new JLabel("Ranking");
+	private Font bodyFont = new Font ("Arial", Font.BOLD, frameHeight / 70);
+	public static JLabel rank1 = new JLabel("*1*\tUSER\twins: 0 loses: 0 | win rate:  0%");
+	public static JLabel rank2 = new JLabel("+2+\tUSER\twins: 0 loses: 0 | win rate:  0%");
+	public static JLabel rank3 = new JLabel("-3-\tUSER\twins: 0 loses: 0 | win rate:  0%");
+	public static JLabel rank4 = new JLabel("_4_\tUSER\twins: 0 loses: 0 | win rate:  0%");
+	public static JLabel rank5 = new JLabel(".5.\tUSER\twins: 0 loses: 0 | win rate:  0%");
 	
 	public static GameFrame gameFrame = new GameFrame();
 	
@@ -92,8 +98,36 @@ public class WaitingFrame extends JFrame implements ActionListener {
         RankTitle.setLocation(565, 245);
         RankTitle.setSize(RankTitle.getPreferredSize().width, RankTitle.getPreferredSize().height);
         
-        layeredPane.add(RankTitle);
+        rank1.setFont(bodyFont);
+//        rank1.setLocation(565,275);
+        rank1.setSize(rank1.getPreferredSize());
+        
+        rank2.setFont(bodyFont);
+//        rank2.setLocation(565,305);
+        rank2.setSize(rank2.getPreferredSize());
+        
+        rank3.setFont(bodyFont);
+//        rank3.setLocation(565,335);
+        rank3.setSize(rank2.getPreferredSize());
+        
+        rank4.setFont(bodyFont);
+//        rank4.setLocation(565,365);
+        rank4.setSize(rank2.getPreferredSize());
+        
+        rank5.setFont(bodyFont);
+//        rank5.setLocation(565,395);
+        rank5.setSize(rank2.getPreferredSize());
+        
+        Ranking.add(RankTitle);
+        Ranking.add(rank1);
+        Ranking.add(rank2);
+        Ranking.add(rank3);
+        Ranking.add(rank4);
+        Ranking.add(rank5);
+        
         layeredPane.add(Ranking);
+        
+        
         
         // 패널1
         // 이미지 받아오기
