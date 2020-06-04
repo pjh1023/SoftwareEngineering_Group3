@@ -1,13 +1,17 @@
 package Network;
 
+import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+
+import Network.ClientNetwork.ClientSender;
 
 
 public class ClientNetwork {
@@ -17,7 +21,8 @@ public class ClientNetwork {
 	boolean isReady;
 	public static int userID; 
 	
-	
+	//sjb - 172.17.220.115 
+	//pjh- 192.168.0.9
 	
 	public void connect(String nickname) {
 		try {
@@ -110,6 +115,8 @@ public class ClientNetwork {
 							Frame.Main.loginFrame.dispose();
 							Frame.Main.waitingFrame = new Frame.WaitingFrame(); //대기방으로 넘어가기 
 							Frame.Main.waitingFrame.setThis();
+							
+							ClientSender.sendMsg("[TopRank],"+Network.ClientNetwork.userID);
 						}
 						else {
 //							System.out.println("login Failed");
@@ -120,21 +127,43 @@ public class ClientNetwork {
 					else if(message.contains("[IdCheck]")) {
 						String str[] = message.split(",");
 						if(str[2].equals("true")) {
+							Frame_Components.SignupFramePanel.iCheckResult = true;
+							Frame_Components.SignupFramePanel.notice.setText("Available ID :)");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
 							System.out.println("Available ID");
 						}
 						else {
+							Frame_Components.SignupFramePanel.iCheckResult = false;
+							Frame_Components.SignupFramePanel.notice.setText("Invalid ID");
+							Frame_Components.SignupFramePanel.notice.setForeground(Color.red);
 							System.out.println("Existing ID");
-							
+						}
+						
+						if(Frame_Components.SignupFramePanel.iCheckResult&&Frame_Components.SignupFramePanel.nCheckResult) {
+							Frame_Components.SignupFramePanel.notice.setText("Register Enable!");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
+							Frame_Components.SignupFramePanel.regButton.setEnabled(true);
 						}
 					}
 					else if(message.contains("[NickCheck]")) {
 						String str[] = message.split(",");
 						if(str[2].equals("true")) {
+							Frame_Components.SignupFramePanel.nCheckResult = true;
+							Frame_Components.SignupFramePanel.notice.setText("Available Nickname :)");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
 							System.out.println("Available Nickname");
 						}
 						else {
+							Frame_Components.SignupFramePanel.nCheckResult = false;
+							Frame_Components.SignupFramePanel.notice.setText("Invalid Nickname");
+							Frame_Components.SignupFramePanel.notice.setForeground(Color.red);
 							System.out.println("Existing Nickname");
-							
+						}
+						
+						if(Frame_Components.SignupFramePanel.iCheckResult&&Frame_Components.SignupFramePanel.nCheckResult) {
+							Frame_Components.SignupFramePanel.notice.setText("Register Enable!");
+							Frame_Components.SignupFramePanel.notice.setForeground(new Color(0,200,0));
+							Frame_Components.SignupFramePanel.regButton.setEnabled(true);
 						}
 					}
 					else if(message.contains("[Register]")) {
@@ -142,6 +171,35 @@ public class ClientNetwork {
 						userID = Integer.parseInt(str[2]);
 						System.out.println("Successfully registered");
 					}
+					else if(message.contains("[TopRank]")) { // received format: nick/wins/loses/rate,nick/wins/loses/rate,...
+						String str[] = message.split(",");
+						ArrayList<String> top5 = new ArrayList<String>();
+						for(int i=2; i<str.length; i++) {
+							top5.add(str[i]);
+						}
+						for(int i=0; i<top5.size(); i++) {
+							String inform[] = top5.get(i).split("/");
+							switch(i) {
+							case 0:
+								Frame.WaitingFrame.rank1.setText("*1*\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								break;
+							case 1:
+								Frame.WaitingFrame.rank2.setText("=2=\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								break;
+							case 2:
+								Frame.WaitingFrame.rank3.setText("+3+\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								break;
+							case 3:
+								Frame.WaitingFrame.rank4.setText("-4-\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								break;
+							case 4:
+								Frame.WaitingFrame.rank5.setText(".5.\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								break;
+							}
+							
+						}
+					}
+					
 				}catch(IOException e) {}
 				
 			}//while

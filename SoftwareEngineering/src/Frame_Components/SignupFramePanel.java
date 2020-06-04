@@ -19,13 +19,13 @@ import Network.ClientNetwork.ClientSender;
 
 public class SignupFramePanel extends JPanel implements ActionListener{
 	public SignupFrameTypePanel signupTypePanel = new SignupFrameTypePanel();
-	public JButton regButton = new JButton();
+	public static JButton regButton = new JButton();
 	public JButton canButton = new JButton();
 	public JButton idCheckButton = new JButton();
 	public JButton nickCheckButton = new JButton();
-	public JLabel notice = new JLabel("");
-	public boolean nCheckResult = false;
-	public boolean iCheckResult = false;
+	public static JLabel notice = new JLabel("");
+	public static boolean nCheckResult = false;
+	public static boolean iCheckResult = false;
 	JFrame sf;
 	
 	
@@ -79,11 +79,6 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 		notice.setFont(signupTypePanel.font);
 		notice.setBounds(180, 250,200,20);
 		
-		
-		////state change btn
-		changeBtn.setText("State Change");
-		changeBtn.setBounds(300, 250, 100, 20);
-		changeBtn.addActionListener(this);
 	}
 
 	public void addComponents() {
@@ -100,71 +95,28 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 		if (e.getSource().toString().contains("text=Register")) {
 
 			ClientSender.sendMsg("[Register],"+Network.ClientNetwork.userID+","+signupTypePanel.idTextF.getText()+","+String.valueOf(signupTypePanel.pwTextF.getPassword())+","+signupTypePanel.nickNameTextF.getText());			
-//			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
-			
+
 			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Welcome!");
 			sf.dispose();
+			
 		}
 		if (e.getSource().toString().contains("text=Cancel")) {
 			System.out.println("Good Bye");
 			sf.dispose();
 		}
 		if (e.getSource().toString().contains("text=ID Check")) {
-			
+			if(signupTypePanel.idTextF.getText().equals(""))
+				return;
 			ClientSender.sendMsg("[IdCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.idTextF.getText());
 			
-			
-			if(iCheckResult) {
-				System.out.println("ID Complete");
-				notice.setText("ID Check Complete");
-				notice.setForeground(new Color(0,200,0));
-			}
-			else {
-				System.out.println("ID Already Exists");
-				notice.setText("ID Already Exists");
-				notice.setForeground(Color.red);
-				
-			}
-			if(iCheckResult&&nCheckResult) {
-				notice.setText("Register Enable!");
-				notice.setForeground(new Color(0,200,0));
-				regButton.setEnabled(true);
-			}
 		}
 		if (e.getSource().toString().contains("text=Nick Check")) {
-			
+			if(signupTypePanel.nickNameTextF.getText().equals(""))
+				return;
 			ClientSender.sendMsg("[NickCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.nickNameTextF.getText());
 			
-			if(nCheckResult) {
-				System.out.println("Nick Complete");
-				notice.setText("Nick Check Complete");
-				notice.setForeground(new Color(0,200,0));
-			}
-			else {
-				System.out.println("Nick Already Exists");
-				notice.setText("Nick Already Exists");
-				notice.setForeground(Color.red);
-			}
-			
-			if(iCheckResult&&nCheckResult) {
-				notice.setText("Register Enable!");
-				notice.setForeground(new Color(0,200,0));
-				regButton.setEnabled(true);
-			}
 		}
-		if (e.getSource().toString().contains("text=State")) {
-			if(!iCheckResult) {
-				iCheckResult = true;
-				nCheckResult = false;
-			}else
-			{
-				iCheckResult = true;
-				nCheckResult = true;
-			}// 지금 state change 한번 누르면 아이디 true, 두번째 누르면 닉네임까지 true 로 바꿔줍니다.(임시테스트로직)
-
-			System.out.println("state changed");
-
-		}
+		
 	}
 }
