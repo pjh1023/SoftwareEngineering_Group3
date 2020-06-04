@@ -1,4 +1,4 @@
-package Database;
+package Server;
 import java.sql.*;
 
 /*	hgumarble (database)
@@ -23,12 +23,12 @@ public class DB {
         String url = "jdbc:mysql://203.252.119.113:55551/hgumarble?serverTimezone=UTC";
         
         try {
-			con = DriverManager.getConnection(url, "pjh", "wnsgur219");		// client용 계정 생성 필요. (limited access authorization)
+			con = DriverManager.getConnection(url, "pjh", "wnsgur219");
 		} catch (SQLException e) {
 			System.out.println("connection problem: ");
 			e.printStackTrace();
 		}
-        System.out.println("Connection Success");
+        System.out.println("Database Connection Success");
     }
 	
 	public static DB getInstance() {return db;}

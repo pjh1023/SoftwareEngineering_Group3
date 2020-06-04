@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Network.ClientNetwork.ClientSender;
+
 public class SignupFramePanel extends JPanel implements ActionListener{
 	public SignupFrameTypePanel signupTypePanel = new SignupFrameTypePanel();
 	public JButton regButton = new JButton();
@@ -57,10 +59,13 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().toString().contains("text=Register")) {
-
+			
 			
 			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 
+		}
+		else if(e.getSource().toString().contains("text=ID check")) {
+			ClientSender.sendMsg("[IdCheck],1,"+signupTypePanel.idTextF.getText());
 		}
 	}
 }
