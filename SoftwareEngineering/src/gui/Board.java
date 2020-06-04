@@ -8,19 +8,13 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import backend.game.ChanceCard;
-import backend.game.City;
 import backend.game.Land;
-import backend.game.Prison;
-import backend.game.Start;
-import backend.game.Travel;
 
 public class Board extends JPanel {
 

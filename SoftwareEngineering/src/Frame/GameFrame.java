@@ -1,4 +1,5 @@
 package Frame;
+import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
@@ -9,6 +10,8 @@ public class GameFrame extends JFrame{
 	
 	public static int startX = 0;
 	public static int startY = 0;
+	
+	public static final Color[] COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
 
 	public static int frameWidth = screenWidth*2/3;
 	public static int frameHeight = screenHeight-25;

@@ -2,7 +2,6 @@ package Frame;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import java.awt.Window.Type;
 
 public class LoginFrame extends JFrame {
 	public static int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();

@@ -24,10 +24,10 @@ public abstract class Player implements Economic{
 		return this.name;
 	}
 	
-	public boolean pay(Economic to, int amount) {
+	public int pay(Economic to, int amount) {
 		int sum = to.paid(amount);// balance -= to.paid(amount) ==> bug
 		balance -= sum;
-		return balance > 0;
+		return balance > 0?0:1;
 	}
 	
 	public int paid(int amount) {

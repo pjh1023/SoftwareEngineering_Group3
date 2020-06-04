@@ -14,7 +14,6 @@ import backend.game.action.SelectPosition;
 import backend.game.action.Transaction;
 import backend.game.action.Wish2Buy;
 import backend.game.economic.Bank;
-import backend.game.economic.ConsolePlayer;
 import backend.game.economic.Economic;
 import backend.game.economic.Everyone;
 import backend.game.economic.First;
@@ -224,15 +223,15 @@ public class GameManager {
 			Transaction ts = (Transaction)current;
 			Economic from = getEconomic(ts.getFrom());
 			Economic to = getEconomic(ts.getTo());
-			boolean result = from.pay(to, ts.getAmount());
+			int result = from.pay(to, ts.getAmount());
 			if (step > 0) //salary
 				next = new Move(step);
-			else if(result) {
+			else if(result == 0) {
 				nextTurn();
 				next = new RollDice();
 			}
 			else 
-				next = new Bankrupt(ts.getFrom());
+				next = new Bankrupt(result);
 		}
 		else if(current instanceof SelectPosition) {
 			int destination = players.get(turn).where2go();

@@ -1,6 +1,5 @@
 package Frame;
 
-import java.awt.Component;
 import javax.swing.JFrame;
 
 public class SignupFrame extends JFrame{

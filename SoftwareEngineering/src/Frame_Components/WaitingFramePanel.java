@@ -1,13 +1,12 @@
 package Frame_Components;
 
-//import java.awt;
-import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.io.*;
-import javax.imageio.*;
+
+//import java.awt;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 public class WaitingFramePanel extends JPanel {
