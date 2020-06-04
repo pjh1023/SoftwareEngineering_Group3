@@ -1,19 +1,19 @@
 package backend.game;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class City extends Land {
 	private int level;
 	private int owner;
-	private ArrayList<Integer> price;
-	private ArrayList<Integer> tollFee;
+	private List<Integer> price;
+	private List<Integer> tollFee;
 	
-	public City(String name, ArrayList<Integer> price, ArrayList<Integer> tollFee) {
+	public City(String name, List<Integer> list, List<Integer> list2) {
 		super(name);
 		level = 0;
 		owner = -1;
-		this.price = price;
-		this.tollFee = tollFee;
+		this.price = list;
+		this.tollFee = list2;
 	}
 	
 	public int getLevel() {
