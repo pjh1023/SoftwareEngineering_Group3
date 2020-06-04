@@ -99,6 +99,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 			JOptionPane.showMessageDialog(null, "Welcome to Handong Marble!", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 			System.out.println("Welcome!");
 			sf.dispose();
+			
 		}
 		if (e.getSource().toString().contains("text=Cancel")) {
 			System.out.println("Good Bye");
@@ -114,6 +115,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 			if(signupTypePanel.nickNameTextF.getText().equals(""))
 				return;
 			ClientSender.sendMsg("[NickCheck],"+Network.ClientNetwork.userID+","+signupTypePanel.nickNameTextF.getText());
+
 		}
 		
 	}
