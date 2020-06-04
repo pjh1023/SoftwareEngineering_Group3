@@ -17,17 +17,18 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import Frame.GameFrame;
 import backend.game.BoundedBuffer;
 import backend.game.ChanceCard;
 import backend.game.ChanceCardEvent;
 import backend.game.City;
+import backend.game.DecideTurn;
 import backend.game.GameManager;
 import backend.game.Land;
 import backend.game.Prison;
 import backend.game.Start;
 import backend.game.Travel;
 import backend.game.action.*;
-import backend.game.action.RollDice;
 import backend.game.economic.ConsolePlayer;
 import backend.game.economic.LocalPlayer;
 import backend.game.economic.Player;
@@ -42,6 +43,11 @@ public class GameFrameTypePanel extends JPanel{
 		@Override
 		public void run() {
 			while(true) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				Action a = gm.getAction();
 				for (int i = 0; i < players.size(); i++) {
 					gamePlayerPanel.players.get(i).setPlayerInfo();
@@ -59,9 +65,12 @@ public class GameFrameTypePanel extends JPanel{
 				
 				
 				int pNum = gm.getOriginN(gm.getTurn());
-				turnColor.setBackground(new Color(Math.max((1 - pNum % 3) * 255, 0), pNum/2 * 255, pNum==1?255:0 ));
+				turnColor.setBackground(GameFrame.COLORS[pNum] );
 				turnText.setText(players.get(gm.getTurn()).getName() + "'s turn");
-				if (a instanceof RollDice) {
+				if (a instanceof DecideTurn) {
+					
+				}
+				else if (a instanceof RollDice) {
 					RollDice rd = (RollDice)a;
 					dice1.setDice(rd.getDice()/10);
 					dice2.setDice(rd.getDice()%10);
@@ -70,6 +79,28 @@ public class GameFrameTypePanel extends JPanel{
 					Imprison imp = (Imprison)a;
 					stateArea.setText(players.get(imp.getTurn()).getName() +
 							(imp.isFirstTime()?" has imprisoned":" failed to escape"));
+				}
+				else if (a instanceof Release) {
+					stateArea.setText(gm.getTurnPlayer().getName() + " is released");		
+				}
+				else if (a instanceof Transaction) {
+					Transaction ts = (Transaction)a;
+					if (ts.getFrom() >= 0 && ts.getTo() >= 0 ) {
+						stateArea.setText(players.get(ts.getFrom()).getName() + " paid " +
+					ts.getAmount() + " to " + players.get(ts.getTo()).getName());
+					}
+				}
+				else if (a instanceof Bankrupt) {
+					int result = ((Bankrupt)a).getWho();
+					stateArea.setText("");
+					for (int i = 0; i < 4; i ++) {
+						if ((result & (1 << i)) != 0)
+							stateArea.append(players.get(i).getName() + " is bankrupt\n");
+					}
+				}
+				else if (a instanceof Result) {
+					stateArea.setText("Game End");
+					break;
 				}
 //				repaint();			
 			}
@@ -95,7 +126,7 @@ public class GameFrameTypePanel extends JPanel{
 	//private JPanel contentIncluder;
 	JPanel playerAssetsPanel;
 	CardLayout c1 = new CardLayout();
-	ArrayList<PlayerPanel> playersP = new ArrayList<PlayerPanel>(); //player arrayList here
+//	ArrayList<PlayerPanel> playersP = new ArrayList<PlayerPanel>(); //player arrayList here
 
 	private JButton btnRollDice;
 	private JButton btnDraw;
@@ -115,13 +146,22 @@ public class GameFrameTypePanel extends JPanel{
 	}
 	
 	class BooleanDialog extends JDialog{
-		JLabel upgradeText = new JLabel("R U Upgrade?");
-		JButton yesB = new JButton("Yes");
-		JButton noB = new JButton("No");
+		private JLabel message = new JLabel("R U Upgrade?");
+		private JButton yesB = new JButton("Yes");
+		private JButton noB = new JButton("No");
 		JPanel temp = new JPanel();
 		
 		public BooleanDialog(int landNum) {
-			//super(frame);
+			City city = (City)board.get(landNum);
+			if (city.getOwner() < 0) {
+				message.setText("Will you buy this building for " + city.getPrice()
+				+"\nExpected toll fee is " + city.getExpectedTollFee());
+			}
+			else {
+				message.setText("Will you upgrade this building for " + city.getPrice()
+				+"\nExpected toll fee is " + city.getExpectedTollFee());
+			}
+			
 			setLayout(br);
 			add(BorderLayout.SOUTH, temp);
 			temp.add(yesB);
@@ -144,7 +184,7 @@ public class GameFrameTypePanel extends JPanel{
 			});
 			setSize(300,200);
 			setLocation(500,300);
-			add(br.NORTH, upgradeText);
+			add(br.NORTH, message);
 		}
 	}
 	
@@ -158,11 +198,11 @@ public class GameFrameTypePanel extends JPanel{
 		random = new Random();
 		
 		deck = new ArrayList<ChanceCardEvent>();
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 300, ""));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 300, ""));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, ""));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 200000, ""));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, ""));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 300, "장학금 선정\n오 예! 장학금300원을 받으세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 800, "아 미안 카드를 안 들고 왔네\n친구 대신 버스 카드를 찍어 주세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, "삥뜯기\n돈이 가장 많은 친구에게 300원을 삥뜯습니다."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 200000, "근로비 지급\n학부사무실에서 200000원을 받으세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, "생활관 보증금 기부\\n나도 모르는 사이에 300원을 기부하세요."));
 		
 		players = new ArrayList<Player>();
 		players.add(new LocalPlayer("Local", 15000, this));
@@ -194,8 +234,7 @@ public class GameFrameTypePanel extends JPanel{
 
 		pp = new ArrayList<PlayerPanel>();
 		for (int i=0;i<players.size();i++)
-			pp.add(new PlayerPanel(i+1, new Color(Math.max((1 - i % 3) * 255, 0), i/2 * 255, i==1?255:0 ), players.get(i)));
-			//RED, BLUE, GREEN, YELLO
+			pp.add(new PlayerPanel(i+1, GameFrame.COLORS[i], players.get(i)));
 		
 		gm = new GameManager(players, board, deck);
 		
@@ -223,12 +262,14 @@ public class GameFrameTypePanel extends JPanel{
 	public void addComponents() {
 		//Roll dice Action!!
 		btnRollDice = new JButton("Roll Dice");
+		btnRollDice.setEnabled(false);
 		init();		
 		
 		for (int i = 0; i < pp.size(); i++)
 		{
-			playersP.add(pp.get(i));
-			this.add(pp.get(i), new Integer(1));
+			//playersP.add(pp.get(i));
+			PlayerPanel pp = this.pp.get(i);
+			this.add(pp);
 		}
 		
 		JPanel rightPanel = new JPanel(); //for buttons and turn explanation gray panel
@@ -244,16 +285,18 @@ public class GameFrameTypePanel extends JPanel{
 		btnDraw.setEnabled(false);
 		btnDraw.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buf.push(random.nextInt(deck.size()));
+				int choice = random.nextInt(deck.size());
+				stateArea.setText(deck.get(choice).getDiscription());
+				buf.push(choice);
 			}
 		});	
 		
 		//DICE!!
 		dice1 = new Dice(244, 406, 40, 40);
-		this.add(dice1, new Integer(1));
+		this.add(dice1, 1);
 
 		dice2 = new Dice(333, 406, 40, 40);
-		this.add(dice2, new Integer(1));
+		this.add(dice2, 1);
 
 		btnRollDice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
