@@ -162,8 +162,7 @@ public class SignupFramePanel extends JPanel implements ActionListener{
 				iCheckResult = true;
 				nCheckResult = true;
 			}// 지금 state change 한번 누르면 아이디 true, 두번째 누르면 닉네임까지 true 로 바꿔줍니다.(임시테스트로직)
-			
-			
+
 			System.out.println("state changed");
 
 		}
