@@ -9,12 +9,13 @@ public class First implements Economic {
 		this.players = players;
 	}
 	
-	private Player getFirst() {
+	private int getFirst() {
 		int max_balance = 0;
-		Player first = null;
-		for (Player p : players) {
+		int first = -1;
+		for (int i = 0; i < players.size(); i++) {
+			Player p = players.get(i);
 			if (!p.isBankrupt() && p.getBalance() > max_balance) {
-				first = p;
+				first = i;
 				max_balance = p.getBalance();
 			}
 		}
@@ -22,12 +23,13 @@ public class First implements Economic {
 	}
 
 	@Override
-	public boolean pay(Economic to, int amount) {
-		return getFirst().pay(to, amount);
+	public int pay(Economic to, int amount) {
+		int first = getFirst();
+		return players.get(first).pay(to, amount) << first;
 	}
 
 	@Override
 	public int paid(int amount) {
-		return getFirst().paid(amount);
+		return players.get(getFirst()).paid(amount);
 	}
 }

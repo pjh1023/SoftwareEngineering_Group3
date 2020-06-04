@@ -2,11 +2,8 @@ package Frame_Components;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class GameFramePanel extends JPanel { //implements ActionListener{
 	
@@ -45,11 +42,4 @@ public class GameFramePanel extends JPanel { //implements ActionListener{
 	public void addComponents() {
 		this.add(gameTypePanel);
 	}
-	
-	
-	//@Override
-	//public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	//}
 }

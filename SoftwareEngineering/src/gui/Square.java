@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import Frame.GameFrame;
 import backend.game.City;
 import backend.game.Land;
 
@@ -128,7 +129,7 @@ public class Square extends JButton {
 		if (land instanceof City) {
 			City c = (City)land;
 			if (pNum >= 0) 
-				colorBoxes.get(c.getLevel()).setBackground(new Color(Math.max((1 - pNum % 3) * 255, 0), pNum/2 * 255, pNum==1?255:0 ));
+				colorBoxes.get(c.getLevel()).setBackground(GameFrame.COLORS[pNum] );
 		}
 	}
 	public int getNumber() {

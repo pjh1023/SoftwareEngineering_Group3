@@ -6,10 +6,10 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
 import backend.game.economic.Player;
 
 
@@ -65,8 +65,13 @@ public class PlayerInfo extends JPanel {
 	 }
 	 
 	public void setPlayerInfo() {
-		System.out.println("hi\n");
-		this.playerMoney.setText("Money : " + player.getBalance());
+		if (player.getBalance() > 0)
+			this.playerMoney.setText("Food point : " + player.getBalance());
+		else {
+			this.playerMoney.setText("Bankrupt");
+			this.pImage.setImage(new ImageIcon("img/p5.png").getImage().getScaledInstance(iWidth, iHeight, Image.SCALE_SMOOTH));
+			playerIcon.setIcon(pImage);
+		}
 	}
 	 
 	private void setThis(int pNum) {

@@ -30,6 +30,13 @@ public class City extends Land {
 		return price.get(owner==-1?0:level + 1);
 	}
 	
+	public int getExpectedTollFee() {
+		if (level == tollFee.size() - 1)
+			return 0;
+		else 
+			return tollFee.get(level + 1);
+	}
+	
 	public int getTollFee() {
 		if (owner == -1)
 			return 0;
