@@ -12,7 +12,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import Frame.ChatFrame;
-import Network.ClientNetwork.ClientSender;
+import backend.game.BoundedBuffer;
 
 
 public class ClientNetwork {
@@ -22,6 +22,9 @@ public class ClientNetwork {
 	boolean isReady;
 	public static int userID; 
 	public static String nickname;
+	
+	private BoundedBuffer<Integer> inBuf;
+	private BoundedBuffer<Integer> outBuf;
 	
 	//sjb - 172.17.220.115 
 	//pjh- 192.168.0.9
@@ -39,6 +42,8 @@ public class ClientNetwork {
 			
 			sender.start();
 			receiver.start();
+			inBuf = new BoundedBuffer<Integer>();
+			outBuf = new BoundedBuffer<Integer>();
 		} catch(ConnectException ce) {
 			ce.printStackTrace();
 		} catch(Exception e){}
@@ -215,6 +220,11 @@ public class ClientNetwork {
 						Frame.WaitingFrame.myNickName.setText("Nickname:\t"+inform[2]);
 						Frame.WaitingFrame.myRate.setText("Wins:\t"+inform[3]+"\tLoses:\t"+inform[4]);
 					}
+					else if (message.startsWith("[Game]")) {
+						System.out.print(message);
+						String str[] = message.split(",");
+						outBuf.push(0);
+					}					
 					else if(message.contains("[Open]")) {
 						Frame.WaitingFrame.self.setVisible(false);
 						Frame.WaitingFrame.gameFrame.setThis();
@@ -227,8 +237,6 @@ public class ClientNetwork {
 						Frame.WaitingFrame.chatFrame.setThis();
 						Frame.WaitingFrame.chatFrame.setVisible(true);
 					}
-					
-					
 					
 				}catch(IOException e) {}
 				
