@@ -2,8 +2,11 @@ package Frame_Components;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import Network.User;
 
 public class GameFramePanel extends JPanel { //implements ActionListener{
 	
@@ -12,7 +15,7 @@ public class GameFramePanel extends JPanel { //implements ActionListener{
 	//private JButton Sample = new JButton("WoW");
 	
 	
-	private GameFrameTypePanel gameTypePanel = new GameFrameTypePanel(); //actual board, playerinfo, dice, etc 
+	private GameFrameTypePanel gameTypePanel; //actual board, playerinfo, dice, etc 
 	
 	//private JLabel headLabel = new JLabel("malmaa", JLabel.CENTER);
 	
@@ -21,7 +24,8 @@ public class GameFramePanel extends JPanel { //implements ActionListener{
 	static final int height = Frame.GameFrame.frameHeight;
 	
 	
-	public GameFramePanel() {
+	public GameFramePanel(ArrayList<User> users) {
+		this.gameTypePanel = new GameFrameTypePanel(users);
 		this.setThis(null);
 	}
 	
@@ -33,7 +37,7 @@ public class GameFramePanel extends JPanel { //implements ActionListener{
 		addComponents();
 
 	}
-
+	private ArrayList<User> users;
 	public void setComponents() {
 		gameTypePanel.setThis();	
 	}

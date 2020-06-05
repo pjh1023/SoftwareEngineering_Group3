@@ -1,7 +1,11 @@
 package Frame;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
+
+import Network.User;
 
 
 public class GameFrame extends JFrame{
@@ -18,8 +22,8 @@ public class GameFrame extends JFrame{
 	
 	public Frame_Components.GameFramePanel gamePanel;
 	
-	public void setThis() {
-		gamePanel = new Frame_Components.GameFramePanel();
+	public void setThis(ArrayList<User> users) {
+		gamePanel = new Frame_Components.GameFramePanel(users);
 		this.setBounds(startX, startY, frameWidth, frameHeight); // setBounds로 왼쪽위(시작지점) x,y값과 원하는 frame의 크기를 넣어줍니다.
 		getContentPane().setLayout(null); // Frame과 Panel에는 layout을 지정해줄 수 있습니다. null로 하게되면 자유롭게 component들을 위치 지정해서 넣어줄 수 있고(노가다) 다른 layout들은 찾아보시면 좋을 것 같습니다 :)
 		this.setResizable(false);
