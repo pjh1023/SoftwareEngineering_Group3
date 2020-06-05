@@ -8,6 +8,7 @@ public class Main {
 	static Network.ClientNetwork network = new Network.ClientNetwork();
 	
 	public static void main(String[] args) {
+		
 		network.connect("1234");
 		loginFrame.setThis();
 	}
