@@ -11,19 +11,28 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+
+import Network.ClientNetwork;
+
+//import Frame_Components.ChatPanel;
+
 import java.awt.Window.Type;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class ChatFrame extends JFrame{
+public class ChatFrame extends JFrame implements ActionListener{
 
 	//private Frame_Components.ChatPanel chatPanel = new Frame_Components.ChatPanel();
 
 	public static final int width = Frame.GameFrame.frameWidth;
 	public static final int height = Frame.GameFrame.frameHeight;
 	
-	JTextArea ta= new JTextArea(20,20); 
+	static JTextArea ta= new JTextArea(20,20); 
+
 	JButton send = new JButton("SEND");
 	JTextField tf= new JTextField();
 	public JPanel chatPanel = new JPanel();
@@ -32,6 +41,10 @@ public class ChatFrame extends JFrame{
 	public ChatFrame () {
 		this.setThis();
 		this.setTitle("Chatting ROOM");
+		
+		tf.addActionListener(this);
+		send.addActionListener(this);
+
 	}
 	
 	public void setThis() {
@@ -61,12 +74,26 @@ public class ChatFrame extends JFrame{
                 } 
             }
 
-			private void actionPerformed(Object object) {
-				// TODO Auto-generated method stub
-				 tf.setText(""); 
-			} 
         });
 
+
+		send.setBackground(Color.yellow);
+	}
+	public static void chat_out(String msg) {
+		msg += "\n";
+		ta.append(msg);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	if(e.getSource().equals(send)) {
+//    		System.out.println("push");
+    		if(tf.getText().equals(""))
+    			return;
+    		ClientNetwork.cs.sendMsg("[Msg],"+"["+Main.nickname+"]: ,"+tf.getText());
+    		tf.setText("");
+    	}
 	}
 
 	

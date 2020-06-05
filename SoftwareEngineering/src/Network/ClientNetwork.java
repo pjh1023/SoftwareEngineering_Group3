@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import Frame.ChatFrame;
 import Network.ClientNetwork.ClientSender;
 
 
@@ -26,7 +27,8 @@ public class ClientNetwork {
 	
 	public void connect(String nickname) {
 		try {
-			String serverIp = "192.168.0.9"; 
+			String serverIp = "192.168.0.12"; 
+//			String serverIp = "172.17.152.54";
 			Socket socket = new Socket(serverIp, 7778); //portNum
 			System.out.println("client connected");
 			Thread sender = new Thread(new ClientSender(socket, nickname)); 
@@ -92,7 +94,8 @@ public class ClientNetwork {
 					
 					if(message.contains("[Msg]")) {
 						String str[] = message.split(",");
-						
+//						System.out.println(str[0]+str[1]+str[2]);
+						ChatFrame.chat_out(str[1] + str[2]);
 					}
 					else if(message.contains("[Ready]")) {
 						
@@ -108,7 +111,7 @@ public class ClientNetwork {
 					}
 					else if(message.contains("[Login]")) {
 						String str[] = message.split(",");
-						if(str[2].equals("true")) {
+						if(str[2].equals("true")) { //str[2] is id
 							// login Success
 							Frame.Main.loginFrame.logPanel.setVisible(false);
 							Frame.Main.loginFrame.remove(Frame.Main.loginFrame.logPanel);
