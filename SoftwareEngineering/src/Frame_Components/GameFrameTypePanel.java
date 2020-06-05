@@ -83,7 +83,7 @@ public class GameFrameTypePanel extends JPanel{
 				
 				int pNum = gm.getOriginN(gm.getTurn());
 				turnColor.setBackground(GameFrame.COLORS[pNum] );
-				turnText.setText(players.get(gm.getTurn()).getName() + "'s turn");
+				turnText.setText(gm.getTurnPlayer().getName() + "'s turn");
 				if (a instanceof DecideTurn) {
 					
 				}
