@@ -18,7 +18,7 @@ import Network.ClientNetwork.ClientSender;
 public class ClientNetwork {
 
 	public static ClientSender cs ;
-	Socket socket;
+	public static Socket socket;
 	boolean isReady;
 	public static int userID; 
 	
