@@ -37,7 +37,6 @@ public class TcpIpMultichatServer {
 				ServerReceiver thread = new ServerReceiver(socket, this);
 				
 				thread.start();
-				queue.add(thread); //client정보 queue에 담아
 			}
          
 		} catch(Exception e) {
@@ -120,6 +119,7 @@ public class TcpIpMultichatServer {
 
 					}
 					else if(mssg.startsWith("[Ready]")) {
+						queue.add(this); //client정보 queue에 담아
 						System.out.println(queue.size());
 						if(queue.size() % 4 == 0) {
 							Room room = new Room(queue.size()/4); //queue.size()/4 == roomNumber
