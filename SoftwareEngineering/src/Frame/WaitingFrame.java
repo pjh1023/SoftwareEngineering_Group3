@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
  
 import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,10 +39,12 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	private JLabel headLabel = new JLabel("Handong Marble", JLabel.CENTER); //한동 마
 	private Font headFont = new Font ("Arial", Font.BOLD, frameHeight / 13);
 	private JLabel playInfoLabel = new JLabel("Player Information");//플레이어어 정
-	private Font headFont2 = new Font ("Arial", Font.BOLD, frameHeight / 20);
+	private Font headFont2 = new Font ("Arial", Font.BOLD, 30);
+	
 	public JPanel Ranking = new JPanel();
 	private JLabel RankTitle = new JLabel("Ranking");
 	private Font bodyFont = new Font ("Arial", Font.BOLD, frameHeight / 70);
+	
 	public static JLabel rank1 = new JLabel("*1*\tUSER\twins: 0 loses: 0 | win rate:  0%");
 	public static JLabel rank2 = new JLabel("+2+\tUSER\twins: 0 loses: 0 | win rate:  0%");
 	public static JLabel rank3 = new JLabel("-3-\tUSER\twins: 0 loses: 0 | win rate:  0%");
@@ -49,7 +53,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	
 	public static GameFrame gameFrame = new GameFrame();
 	public static ChatFrame chatFrame = new ChatFrame();
-	
+
 	//Frame components 
 	//public Frame_Components.WaitingFramePanel waitPanel = new Frame_Components.WaitingFramePanel();
     BufferedImage img = null;
@@ -61,8 +65,11 @@ public class WaitingFrame extends JFrame implements ActionListener {
  
     public void setThis() {
     	this.setVisible(true);
+    	this.setResizable(false);
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    
+    
  
     // 생성자
     public WaitingFrame() {
@@ -93,44 +100,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
         
         layeredPane.add(playInfoLabel);
         
-        
-        //Ranking
-        Ranking.setBounds(550, 230, 200, 300);
-        Ranking.setBackground(new Color(255,255,255,200));
-        
-        RankTitle.setFont(headFont2);
-        RankTitle.setLocation(565, 245);
-        RankTitle.setSize(RankTitle.getPreferredSize().width, RankTitle.getPreferredSize().height);
-        
-        rank1.setFont(bodyFont);
-//        rank1.setLocation(565,275);
-        rank1.setSize(rank1.getPreferredSize());
-        
-        rank2.setFont(bodyFont);
-//        rank2.setLocation(565,305);
-        rank2.setSize(rank2.getPreferredSize());
-        
-        rank3.setFont(bodyFont);
-//        rank3.setLocation(565,335);
-        rank3.setSize(rank2.getPreferredSize());
-        
-        rank4.setFont(bodyFont);
-//        rank4.setLocation(565,365);
-        rank4.setSize(rank2.getPreferredSize());
-        
-        rank5.setFont(bodyFont);
-//        rank5.setLocation(565,395);
-        rank5.setSize(rank2.getPreferredSize());
-        
-        Ranking.add(RankTitle);
-        Ranking.add(rank1);
-        Ranking.add(rank2);
-        Ranking.add(rank3);
-        Ranking.add(rank4);
-        Ranking.add(rank5);
-        
-        layeredPane.add(Ranking);
-        
+       
         
         
         // 패널1
@@ -149,7 +119,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
         //준비 버튼 추가
         icon = new ImageIcon("img/ready.png");
         readyButton = new JButton(resizeIcon(icon, 100, 50));
-        readyButton.setBounds(800, 500, 200, 100);
+        readyButton.setBounds(850, 500, 100, 50);
         readyButton.addActionListener(this);
         
         // 버튼 투명처리
@@ -158,8 +128,23 @@ public class WaitingFrame extends JFrame implements ActionListener {
         readyButton.setContentAreaFilled(false);
  
         layeredPane.add(readyButton);
- 
-   
+        
+        showRank();
+        
+        Ranking.setLayout(new BoxLayout(Ranking, BoxLayout.Y_AXIS));
+        Ranking.add(RankTitle);
+        Ranking.add(Box.createVerticalStrut(10));
+        Ranking.add(rank1);
+        Ranking.add(Box.createVerticalStrut(10));
+        Ranking.add(rank2);
+        Ranking.add(Box.createVerticalStrut(10));
+        Ranking.add(rank3);
+        Ranking.add(Box.createVerticalStrut(10));
+        Ranking.add(rank4);
+        Ranking.add(Box.createVerticalStrut(10));
+        Ranking.add(rank5);
+        
+        layeredPane.add(Ranking);
         
         
         
@@ -167,6 +152,74 @@ public class WaitingFrame extends JFrame implements ActionListener {
         layeredPane.add(panel);
         add(layeredPane);
         setVisible(false);
+    }
+    
+	String user1 = "1st";
+	String user2 = "2nd";
+	String user3 = "3rd";
+	String user4 = "4th";
+	String user5 = "5th";
+	
+	int win1 = 5;
+	int win2 = 4;
+	int win3 = 3;
+	int win4 = 2;
+	int win5 = 1;
+	
+	int lose1 = 0;
+	int lose2 = 1;
+	int lose3 = 2;
+	int lose4 = 3;
+	int lose5 = 4;
+	
+	float rate1 = (float)win1/(win1+lose1);
+	float rate2 = (float)win2/(win2+lose2);
+	float rate3 = (float)win3/(win3+lose3);
+	float rate4 = (float)win4/(win4+lose4);
+	float rate5 = (float)win5/(win5+lose5);
+	
+    Font font1 = new Font ("Arial", Font.BOLD, 24);
+    Font font2 = new Font ("Arial", Font.BOLD, 22);
+    Font font3 = new Font ("Arial", Font.BOLD, 20);
+    Font font4 = new Font ("Arial", Font.BOLD, 18);
+    Font font5 = new Font ("Arial", Font.BOLD, 16);
+	
+    public void showRank() {
+        //Ranking
+        Ranking.setBounds(500, 230, 300, 250);
+        Ranking.setBackground(new Color(255,255,255,200));
+        
+        RankTitle.setFont(headFont2);
+        RankTitle.setLocation(610, 240);
+        //RankTitle.setSize(RankTitle.getPreferredSize().width, RankTitle.getPreferredSize().height);
+        
+
+
+       user1 = user1 + " | " + Integer.toString(win1) + "승 " + Integer.toString(lose1)+ "패  승률 : " + Float.toString(rate1* 1000 /10)+"%";
+       rank1.setText(user1);
+       rank1.setForeground(new Color(204,153,0));
+       rank1.setFont(font1);
+       
+       user2 = user2 + " | " + Integer.toString(win2) + "승 " + Integer.toString(lose2)+ "패  승률 : " + Float.toString(rate2* 1000 /10)+"%";
+       rank2.setText(user2);
+       rank2.setForeground(new Color(110,110,110));
+       rank2.setFont(font2);
+       
+       user3 = user3 + " | " + Integer.toString(win3) + "승 " + Integer.toString(lose3)+ "패  승률 : " + Float.toString(rate3* 1000 /10)+"%";
+       rank3.setText(user3);
+       rank3.setForeground(new Color(102,051,000));
+       rank3.setFont(font3);
+       
+       user4 = user4 + " | " + Integer.toString(win4) + "승 " + Integer.toString(lose4)+ "패  승률 : " + Float.toString(rate4* 1000 /10)+"%";
+       rank4.setText(user4);
+       rank4.setForeground(Color.black);
+       rank4.setFont(font4);
+       
+       user5 = user5 + " | " + Integer.toString(win5) + "승 " + Integer.toString(lose5)+ "패  승률 : " + Float.toString(rate5* 1000/10)+"%";
+       rank5.setText(user5);
+       rank5.setForeground(Color.black);
+       rank5.setFont(font5);
+        
     }
     
     
@@ -181,13 +234,17 @@ public class WaitingFrame extends JFrame implements ActionListener {
             g.drawImage(img, 0, 0, null);
             //플레이어정보 박스 
             g.setColor(new Color(255,255,255,200));
-            g.fillRect(80, 230, 430, 300);
+            g.fillRect(80, 230, 350, 300);
         }
     }
     
     public void actionPerformed(ActionEvent e) {
 		this.dispose();
     	gameFrame.setThis();
+    	
+    	chatFrame.setThis();
+    	chatFrame.setVisible(true);
+    	
     	//chat Frame enable over here
     	gameFrame.setThis();
     	chatFrame.setThis();

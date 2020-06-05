@@ -3,9 +3,9 @@ package backend.game.economic;
 public class Bank implements Economic {
 
 	@Override
-	public boolean pay(Economic to, int amount) {
+	public int pay(Economic to, int amount) {
 		to.paid(amount);
-		return true;
+		return 0;
 	}
 	
 	@Override

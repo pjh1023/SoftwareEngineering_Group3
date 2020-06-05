@@ -22,7 +22,8 @@ public class ClientNetwork {
 	boolean isReady;
 	public static int userID; 
 	
-	
+	//sjb - 172.17.220.115 
+	//pjh- 192.168.0.9
 	
 	public void connect(String nickname) {
 		try {

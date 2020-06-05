@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+
 import Network.ClientNetwork;
 
 //import Frame_Components.ChatPanel;
@@ -18,6 +19,7 @@ import Network.ClientNetwork;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -30,6 +32,7 @@ public class ChatFrame extends JFrame implements ActionListener{
 	public static final int height = Frame.GameFrame.frameHeight;
 	
 	static JTextArea ta= new JTextArea(20,20); 
+
 	JButton send = new JButton("SEND");
 	JTextField tf= new JTextField();
 	public JPanel chatPanel = new JPanel();
@@ -41,6 +44,7 @@ public class ChatFrame extends JFrame implements ActionListener{
 		
 		tf.addActionListener(this);
 		send.addActionListener(this);
+
 	}
 	
 	public void setThis() {
@@ -69,11 +73,6 @@ public class ChatFrame extends JFrame implements ActionListener{
                      actionPerformed(null); 
                 } 
             }
-
-//			private void actionPerformed(Object object) {
-//				// TODO Auto-generated method stub
-//				 tf.setText(""); 
-//			}
 
         });
 
