@@ -131,9 +131,10 @@ public class TcpIpMultichatServer {
 						}
 					
 					}
-					else if(mssg.startsWith("[Login]")) {
+					else if(mssg.startsWith("[Login]")) { // receive format: [login],userID,nickname,id,pw
 						String str[] = mssg.split(",");
-						sendToOne(str[0]+","+Server.LoginDB.getUserID((String) str[2])+","+loginCheck(str[2],str[3],socket.getInetAddress()+":"+socket.getPort()), socket);
+						int usrID = Server.LoginDB.getUserID((String) str[3]);
+						sendToOne(str[0]+","+usrID+","+Server.LoginDB.getNickname(usrID)+","+loginCheck(str[3],str[4],socket.getInetAddress()+":"+socket.getPort()), socket);
 					}
 					else if(mssg.startsWith("[IdCheck]")) {
 						String str[] = mssg.split(",");

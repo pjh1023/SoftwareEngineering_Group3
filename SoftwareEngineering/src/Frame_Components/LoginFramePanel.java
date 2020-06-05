@@ -69,7 +69,7 @@ public class LoginFramePanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().toString().contains("text=Login")) { // ActionEvent e를 통해서 행해진 action이 무엇인지 비교하고 해당 action을 수행하도록 합니다.
-			ClientSender.sendMsg("[Login],0,"+loginTypePanel.idTextF.getText()+","+String.valueOf(loginTypePanel.pwTextF.getPassword()));
+			ClientSender.sendMsg("[Login],0,nick,"+loginTypePanel.idTextF.getText()+","+String.valueOf(loginTypePanel.pwTextF.getPassword()));
 		}
 		else if (e.getSource().toString().contains("text=Join")) {
 			Frame.Main.signupFrame = new Frame.SignupFrame();
