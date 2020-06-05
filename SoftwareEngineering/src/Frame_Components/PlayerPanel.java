@@ -101,7 +101,7 @@ public class PlayerPanel extends JPanel{
 			};
 
 	public void updatePosition() {
-		this.setLocation(xLocations[playerNumber-1][player.getPosition()%20], yLocations[playerNumber-1][player.getPosition()%20]);
+		this.setLocation(xLocations[playerNumber-1][(player.getPosition()+10)%20], yLocations[playerNumber-1][(player.getPosition()+10)%20]);
 	}
 
 

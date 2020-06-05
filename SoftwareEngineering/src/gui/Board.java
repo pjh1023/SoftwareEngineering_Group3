@@ -157,6 +157,11 @@ public class Board extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		// 판 회전시키기
+		Graphics2D g2d = (Graphics2D) g;
+        int w2 = getWidth() / 2;
+        int h2 = getHeight() / 2;
+        g2d.rotate( Math.PI, w2, h2);
 		super.paintComponent(g);
 	}
 
