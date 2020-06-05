@@ -11,8 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.ArrayList;
-import Network.Room; 
+import java.util.ArrayList; 
 
 public class TcpIpMultichatServer {
 	public static HashMap clients;
@@ -55,7 +54,7 @@ public class TcpIpMultichatServer {
 			}catch(IOException e) {}
 		}
 	}
-	static void sendToOne(String msg, Socket socket) {
+	public static void sendToOne(String msg, Socket socket) {
 		try {
 			DataOutputStream out = (DataOutputStream)clients.get(socket.getPort());
 			out.writeUTF(msg);
@@ -76,6 +75,8 @@ public class TcpIpMultichatServer {
 		DataInputStream in;
 		DataOutputStream out;
 		int roomNum;
+		public int userID; 
+		public String nickname;
 		
 		public static ArrayList<Room> rooms = new ArrayList<Room>();
 		
@@ -135,6 +136,8 @@ public class TcpIpMultichatServer {
 						String str[] = mssg.split(",");
 						int usrID = Server.LoginDB.getUserID((String) str[3]);
 						sendToOne(str[0]+","+usrID+","+Server.LoginDB.getNickname(usrID)+","+loginCheck(str[3],str[4],socket.getInetAddress()+":"+socket.getPort()), socket);
+						nickname = str[3];
+						userID = usrID;
 					}
 					else if(mssg.startsWith("[IdCheck]")) {
 						String str[] = mssg.split(",");
