@@ -9,15 +9,15 @@ import java.util.ArrayList;
 public class RankDB {
 	public RankDB() {}
 	
-	public void updateWinLose(String id, boolean won) { // update win/lose status of client
+	public static void updateWinLose(Integer userID, boolean won) { // update win/lose status of client
 		Statement stmt = null;
 		int win = (won)? 1:0;
 		int lose = (won)? 0:1;
-		ArrayList<Integer> user_rate = getWinLose(LoginDB.getUserID(id));
+		ArrayList<Integer> user_rate = getWinLose(userID);
 		double win_rate = (double)(user_rate.get(0)+win) / (double)((user_rate.get(0)+win)+(user_rate.get(1)+lose));
-		int total_play = getTotalPlay(LoginDB.getUserID(id));
+		int total_play = getTotalPlay(userID);
 		
-		String sql = "UPDATE ranking SET wins="+(user_rate.get(0)+win)+", loses="+(user_rate.get(1)+lose)+", rate="+win_rate+", total="+(total_play+1)+" WHERE userID="+LoginDB.getUserID(id);
+		String sql = "UPDATE ranking SET wins="+(user_rate.get(0)+win)+", loses="+(user_rate.get(1)+lose)+", rate="+win_rate+", total="+(total_play+1)+" WHERE userID="+userID;
 		
     	try {
     		stmt = DB.getInstance().getConnection().createStatement();
