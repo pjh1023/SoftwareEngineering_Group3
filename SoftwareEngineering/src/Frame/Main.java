@@ -13,7 +13,7 @@ public class Main {
 		nickname = Integer.toString(player);
 		
 		network.connect(nickname);
-		System.out.println(nickname);
+//		System.out.println(nickname);
 		
 		loginFrame.setThis();
 	}
