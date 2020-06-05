@@ -157,7 +157,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
     }
     
     private  void showInfo() {
-    	information.setBounds(80, 230, 350, 250);
+    	information.setBounds(80, 230, 330, 250);
     	information.setBackground(new Color(255,255,255,200));
     	information.setLayout(null);	
     	
