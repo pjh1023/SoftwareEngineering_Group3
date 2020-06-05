@@ -57,6 +57,8 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	
 	public static GameFrame gameFrame = new GameFrame();
 	public static ChatFrame chatFrame = new ChatFrame();
+	
+	public static WaitingFrame self = null;
 
 	//Frame components 
 	//public Frame_Components.WaitingFramePanel waitPanel = new Frame_Components.WaitingFramePanel();
@@ -64,10 +66,13 @@ public class WaitingFrame extends JFrame implements ActionListener {
     JTextField loginTextField;
     JPasswordField passwordField;
     JButton readyButton;
+    JButton loadingButton;
     ImageIcon icon;
+    ImageIcon loadingIcon;
     Image tempimg;
  
     public void setThis() {
+    	self = this;
     	this.setVisible(true);
     	this.setResizable(false);
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,12 +146,23 @@ public class WaitingFrame extends JFrame implements ActionListener {
         readyButton.setBounds(850, 500, 100, 50);
         readyButton.addActionListener(this);
         
+        //로딩 버튼 추가
+        loadingIcon = new ImageIcon("img/loading.png");
+        loadingButton = new JButton(resizeIcon(loadingIcon, 100, 50));
+        loadingButton.setBounds(850, 500, 100, 50);
+        loadingButton.setVisible(false);
+//        loadingButton.setEnabled(false);
+        
         // 버튼 투명처리
         readyButton.setBorderPainted(false);
         readyButton.setFocusPainted(false);
         readyButton.setContentAreaFilled(false);
+        loadingButton.setBorderPainted(false);
+        loadingButton.setFocusPainted(false);
+        loadingButton.setContentAreaFilled(false);
  
         layeredPane.add(readyButton);
+        layeredPane.add(loadingButton);
         
         showRank();
         
@@ -257,20 +273,11 @@ public class WaitingFrame extends JFrame implements ActionListener {
         }
     }
     
-    public void actionPerformed(ActionEvent e) {
-		this.dispose();
-    	gameFrame.setThis();
-    	
-    	chatFrame.setThis();
-    	chatFrame.setVisible(true);
-    	
-    	//chat Frame enable over here
-    	gameFrame.setThis();
-    	chatFrame.setThis();
-    	chatFrame.setVisible(true);
-    	
+    public void actionPerformed(ActionEvent e) {    	
     	if(e.getSource().equals(readyButton)) {
     		ClientNetwork.cs.sendMsg("[Ready]," );
+    		readyButton.setVisible(false);
+    		loadingButton.setVisible(true);
     	}
     }
  

@@ -215,6 +215,18 @@ public class ClientNetwork {
 						Frame.WaitingFrame.myNickName.setText("Nickname:\t"+inform[2]);
 						Frame.WaitingFrame.myRate.setText("Wins:\t"+inform[3]+"\tLoses:\t"+inform[4]);
 					}
+					else if(message.contains("[Open]")) {
+						Frame.WaitingFrame.self.setVisible(false);
+						Frame.WaitingFrame.gameFrame.setThis();
+				    	
+						Frame.WaitingFrame.chatFrame.setThis();
+						Frame.WaitingFrame.chatFrame.setVisible(true);
+				    	
+				    	//chat Frame enable over here
+						Frame.WaitingFrame.gameFrame.setThis();
+						Frame.WaitingFrame.chatFrame.setThis();
+						Frame.WaitingFrame.chatFrame.setVisible(true);
+					}
 					
 					
 					
