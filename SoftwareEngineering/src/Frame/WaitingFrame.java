@@ -24,6 +24,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Network.ClientNetwork;
+import Network.ClientNetwork.ClientSender;
 import Server.TcpIpMultichatServer;
  
 public class WaitingFrame extends JFrame implements ActionListener {
@@ -47,11 +48,11 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	private JLabel RankTitle = new JLabel("Ranking");
 	private Font bodyFont = new Font ("Arial", Font.BOLD, 25);
 	
-	public static JLabel rank1 = new JLabel("*1*\tUSER\twins: 0 loses: 0 | win rate:  0%");
-	public static JLabel rank2 = new JLabel("+2+\tUSER\twins: 0 loses: 0 | win rate:  0%");
-	public static JLabel rank3 = new JLabel("-3-\tUSER\twins: 0 loses: 0 | win rate:  0%");
-	public static JLabel rank4 = new JLabel("_4_\tUSER\twins: 0 loses: 0 | win rate:  0%");
-	public static JLabel rank5 = new JLabel(".5.\tUSER\twins: 0 loses: 0 | win rate:  0%");
+	public static JLabel rank1 = new JLabel();
+	public static JLabel rank2 = new JLabel();
+	public static JLabel rank3 = new JLabel();
+	public static JLabel rank4 = new JLabel();
+	public static JLabel rank5 = new JLabel();
 	
 	public static JLabel myID = new JLabel("ID: User");
 	public static JLabel myNickName = new JLabel("Nickname: Nicky");
@@ -140,6 +141,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
         loadingButton.setContentAreaFilled(false);
  
         layeredPane.add(readyButton);
+        layeredPane.add(loadingButton);
 
         layeredPane.add(Ranking);
         layeredPane.add(information);
@@ -254,11 +256,11 @@ public class WaitingFrame extends JFrame implements ActionListener {
        Ranking.add(rank5);
        
        RankTitle.setBounds(10, 0, 400, 50);
-       rank1.setBounds(10, 40, 300, 40);
-       rank2.setBounds(10, 80, 300, 40);
-       rank3.setBounds(10, 120, 300, 40);
-       rank4.setBounds(10, 160, 300, 40);
-       rank5.setBounds(10, 200, 300, 40);
+       rank1.setBounds(10, 40, 380, 40);
+       rank2.setBounds(10, 80, 380, 40);
+       rank3.setBounds(10, 120, 380, 40);
+       rank4.setBounds(10, 160, 380, 40);
+       rank5.setBounds(10, 200, 380, 40);
     }
     
     
@@ -280,7 +282,7 @@ public class WaitingFrame extends JFrame implements ActionListener {
     
     public void actionPerformed(ActionEvent e) {    	
     	if(e.getSource().equals(readyButton)) {
-    		ClientNetwork.cs.sendMsg("[Ready]," );
+    		ClientSender.sendMsg("[Ready]," );
     		readyButton.setVisible(false);
     		loadingButton.setVisible(true);
     	}
