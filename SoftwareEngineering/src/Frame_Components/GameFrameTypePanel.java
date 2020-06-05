@@ -202,7 +202,7 @@ public class GameFrameTypePanel extends JPanel{
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 800, "아 미안 카드를 안 들고 왔네\n친구 대신 버스 카드를 찍어 주세요."));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, "삥뜯기\n돈이 가장 많은 친구에게 300원을 삥뜯습니다."));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 3000, "한동만나\n친구들의 도움으로 학식을 먹습니다."));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, "생활관 보증금 기부\\n나도 모르는 사이에 300원을 기부하세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, "생활관 보증금 기부\n나도 모르는 사이에 300원을 기부하세요."));
 		
 		players = new ArrayList<Player>();
 		players.add(new LocalPlayer("Local", 15000, this));

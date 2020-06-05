@@ -12,7 +12,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import Frame.ChatFrame;
-import Network.ClientNetwork.ClientSender;
+import backend.game.BoundedBuffer;
 
 
 public class ClientNetwork {
@@ -23,13 +23,16 @@ public class ClientNetwork {
 	public static int userID; 
 	public static String nickname;
 	
+	private BoundedBuffer<Integer> inBuf;
+	private BoundedBuffer<Integer> outBuf;
+	
 	//sjb - 172.17.220.115 
 	//pjh- 192.168.0.9
 	
 	public void connect(String nickname) {
 		try {
-//			String serverIp = "192.168.0.12";
-			String serverIp = "192.168.0.9";
+			String serverIp = "192.168.0.12";
+//			String serverIp = "192.168.0.9";
 			Socket socket = new Socket(serverIp, 7778); //portNum
 			System.out.println("client connected");
 			Thread sender = new Thread(new ClientSender(socket, nickname)); 
@@ -39,6 +42,8 @@ public class ClientNetwork {
 			
 			sender.start();
 			receiver.start();
+			inBuf = new BoundedBuffer<Integer>();
+			outBuf = new BoundedBuffer<Integer>();
 		} catch(ConnectException ce) {
 			ce.printStackTrace();
 		} catch(Exception e){}
@@ -215,8 +220,23 @@ public class ClientNetwork {
 						Frame.WaitingFrame.myNickName.setText("Nickname:\t"+inform[2]);
 						Frame.WaitingFrame.myRate.setText("Wins:\t"+inform[3]+"\tLoses:\t"+inform[4]);
 					}
-					
-					
+					else if (message.startsWith("[Game]")) {
+						System.out.print(message);
+						String str[] = message.split(",");
+						outBuf.push(0);
+					}					
+					else if(message.contains("[Open]")) {
+						Frame.WaitingFrame.self.setVisible(false);
+						Frame.WaitingFrame.gameFrame.setThis();
+				    	
+						Frame.WaitingFrame.chatFrame.setThis();
+						Frame.WaitingFrame.chatFrame.setVisible(true);
+				    	
+				    	//chat Frame enable over here
+						Frame.WaitingFrame.gameFrame.setThis();
+						Frame.WaitingFrame.chatFrame.setThis();
+						Frame.WaitingFrame.chatFrame.setVisible(true);
+					}
 					
 				}catch(IOException e) {}
 				
