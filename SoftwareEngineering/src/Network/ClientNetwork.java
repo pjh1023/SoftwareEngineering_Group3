@@ -31,8 +31,8 @@ public class ClientNetwork {
 	
 	public void connect(String nickname) {
 		try {
-//			String serverIp = "192.168.0.12";
-			String serverIp = "192.168.0.9";
+			String serverIp = "192.168.0.12";
+//			String serverIp = "192.168.0.9";
 			Socket socket = new Socket(serverIp, 7778); //portNum
 			System.out.println("client connected");
 			Thread sender = new Thread(new ClientSender(socket, nickname)); 

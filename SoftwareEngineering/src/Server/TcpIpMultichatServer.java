@@ -128,7 +128,10 @@ public class TcpIpMultichatServer {
 							for(int i=queue.size()-1; i>=queue.size()-4; i--) {
 								queue.get(i).roomNum = rooms.size() - 1;
 								room.userV.add(queue.get(i)); //portNum으로 client 가져왕 
+				
 							}
+							room.sendInfo();
+							room.decideTurn();
 						}
 					
 					}
