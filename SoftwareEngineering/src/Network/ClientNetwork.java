@@ -26,8 +26,8 @@ public class ClientNetwork {
 	
 	public void connect(String nickname) {
 		try {
-//			String serverIp = "192.168.0.12"; 
-			String serverIp = "172.17.152.54";
+			String serverIp = "192.168.0.12"; 
+//			String serverIp = "172.17.152.54";
 			Socket socket = new Socket(serverIp, 7778); //portNum
 			System.out.println("client connected");
 			Thread sender = new Thread(new ClientSender(socket, nickname)); 
@@ -93,7 +93,7 @@ public class ClientNetwork {
 					
 					if(message.contains("[Msg]")) {
 						String str[] = message.split(",");
-						System.out.println(str[0]+str[1]+str[2]);
+//						System.out.println(str[0]+str[1]+str[2]);
 						ChatFrame.chat_out(str[1] + str[2]);
 					}
 					else if(message.contains("[Ready]")) {

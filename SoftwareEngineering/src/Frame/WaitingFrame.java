@@ -20,6 +20,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import Network.ClientNetwork;
+import Server.TcpIpMultichatServer;
  
 public class WaitingFrame extends JFrame implements ActionListener {
 	public static int screenWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -189,6 +192,10 @@ public class WaitingFrame extends JFrame implements ActionListener {
     	gameFrame.setThis();
     	chatFrame.setThis();
     	chatFrame.setVisible(true);
+    	
+    	if(e.getSource().equals(readyButton)) {
+    		ClientNetwork.cs.sendMsg("[Ready]," );
+    	}
     }
  
 }
