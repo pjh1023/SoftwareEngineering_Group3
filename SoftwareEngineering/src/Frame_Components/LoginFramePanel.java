@@ -18,7 +18,7 @@ public class LoginFramePanel extends JPanel implements ActionListener{
 	
 	
 	private JLabel headLabel = new JLabel("Handong Marble", JLabel.CENTER);
-	public LoginFrameTypePanel loginTypePanel = new LoginFrameTypePanel(); // 실제 유저의 입력칸은 편의를 위해 따로 panel을 만들었습니다.
+	public static LoginFrameTypePanel loginTypePanel = new LoginFrameTypePanel(); // 실제 유저의 입력칸은 편의를 위해 따로 panel을 만들었습니다.
 	private JButton loginButton = new JButton();
 	private JButton joinButton = new JButton();
 		
@@ -69,7 +69,9 @@ public class LoginFramePanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().toString().contains("text=Login")) { // ActionEvent e를 통해서 행해진 action이 무엇인지 비교하고 해당 action을 수행하도록 합니다.
-			ClientSender.sendMsg("[Login],"+Network.ClientNetwork.userID+","+loginTypePanel.idTextF.getText()+","+String.valueOf(loginTypePanel.pwTextF.getPassword()));
+			if(loginTypePanel.idTextF.getText().equals("") || String.valueOf(loginTypePanel.pwTextF.getPassword()).equals(""))
+				return;
+			ClientSender.sendMsg("[Login],0,nick,"+loginTypePanel.idTextF.getText()+","+String.valueOf(loginTypePanel.pwTextF.getPassword()));
 		}
 		else if (e.getSource().toString().contains("text=Join")) {
 			Frame.Main.signupFrame = new Frame.SignupFrame();

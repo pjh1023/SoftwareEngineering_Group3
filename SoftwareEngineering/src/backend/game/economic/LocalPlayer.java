@@ -16,16 +16,17 @@ public class LocalPlayer extends Player {
 	
 	@Override
 	public int rollDice() {
+		/*
 		System.out.print("Roll Dice: ");
 		int first = sc.nextInt();
 		int second = sc.nextInt();
 		return first*10 + second;
-		/*
+		*/
 		panel.getBtnRollDice().setEnabled(true);
 		int result = panel.getBuf().pop();
 		panel.getBtnRollDice().setEnabled(false);
 		return result;
-		*/
+		
 	}
 
 	@Override

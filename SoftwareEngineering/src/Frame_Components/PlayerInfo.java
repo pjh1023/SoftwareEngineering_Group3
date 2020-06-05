@@ -38,6 +38,7 @@ public class PlayerInfo extends JPanel {
 		 this.setThis(pNum);
 		 this.setLayout(null);
 		 this.player = player;
+		 playerName.setText(player.getName());
 		
 	 }
 	 

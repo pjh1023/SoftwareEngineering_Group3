@@ -7,9 +7,16 @@ public class Main {
   
 	static Network.ClientNetwork network = new Network.ClientNetwork();
 	
+	static String nickname;
 	public static void main(String[] args) {
+
+		int player  = (int) (Math.random()*100000000+1);
+		nickname = Integer.toString(player);
 		
-		network.connect("1234");
+		network.connect(nickname);
+//		System.out.println(nickname);
+		
 		loginFrame.setThis();
+		
 	}
 }

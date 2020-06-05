@@ -28,7 +28,7 @@ public class RankDB {
 		}
 	}
 	
-	public ArrayList<Integer> getWinLose(Integer userID) { // get number of wins and loses
+	public static ArrayList<Integer> getWinLose(Integer userID) { // get number of wins and loses
 		Statement stmt = null;
 		String sql = "SELECT wins, loses FROM ranking WHERE userID='"+userID+"'";
 		ArrayList<Integer> rates = new ArrayList<Integer>();
@@ -38,7 +38,7 @@ public class RankDB {
 			stmt = DB.getInstance().getConnection().createStatement();
     		result = stmt.executeQuery(sql);
 
-    		while (!result.next()) {
+    		while (result.next()) {
     			rates.add(result.getInt("wins"));
     			rates.add(result.getInt("loses"));
     			break;
