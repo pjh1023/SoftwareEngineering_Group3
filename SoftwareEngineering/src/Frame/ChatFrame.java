@@ -91,7 +91,8 @@ public class ChatFrame extends JFrame implements ActionListener{
 //    		System.out.println("push");
     		if(tf.getText().equals(""))
     			return;
-    		ClientNetwork.cs.sendMsg("[Msg],"+"["+Main.nickname+"]: ,"+tf.getText());
+    		ClientNetwork.inBuf.push("[Msg],"+"["+Main.nickname+"]: ,"+tf.getText());
+    		//ClientNetwork.cs.sendMsg("[Msg],"+"["+Main.nickname+"]: ,"+tf.getText());
     		tf.setText("");
     	}
 	}
