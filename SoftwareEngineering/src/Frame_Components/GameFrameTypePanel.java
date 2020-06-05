@@ -117,10 +117,10 @@ public class GameFrameTypePanel extends JPanel{
 				}
 				else if (a instanceof Result) {
 					if (((Result)a).isDraw() || gm.getTurnPlayer() instanceof LocalPlayer) {
-						ClientSender.sendMsg("[Win],0,nick,");
+						ClientSender.sendMsg("[Win],"+Network.ClientNetwork.userID+","+Network.ClientNetwork.nickname);
 					}
 					else {
-						
+						ClientSender.sendMsg("[Lose],"+Network.ClientNetwork.userID+","+Network.ClientNetwork.nickname);
 					}
 					stateArea.setText("Game End");
 					break;

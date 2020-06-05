@@ -170,6 +170,14 @@ public class TcpIpMultichatServer {
 						String str[] = mssg.split(",");
 						sendToOne(mssg+","+getInfo(str[2], Integer.parseInt(str[1])), socket);
 					}
+					else if(mssg.startsWith("[Win]")) {
+						String str[] = mssg.split(",");
+						updateRate(Integer.parseInt(str[1]),true);
+					}
+					else if(mssg.startsWith("[Lose]")) {
+						String str[] = mssg.split(",");
+						updateRate(Integer.parseInt(str[1]),false);
+					}
 				}
 			} catch(IOException e) {}
 				finally { 
@@ -217,5 +225,8 @@ public class TcpIpMultichatServer {
 		for(int i=0; i<rankInfo.size(); i++)
 			information += (rankInfo.get(i)+"/");
 		return information;
+	}
+	public static void updateRate(Integer userID, boolean won) {
+		RankDB.updateWinLose(userID,won);
 	}
 }

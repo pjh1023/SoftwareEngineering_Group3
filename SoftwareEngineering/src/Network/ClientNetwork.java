@@ -125,12 +125,6 @@ public class ClientNetwork {
 					else if(message.contains("[Ready]")) {
 						
 					}
-					else if(message.contains("[Win]")) {
-						
-					}
-					else if(message.contains("[Lose]")) {
-						
-					}
 					else if(message.contains("[Exit]")) {
 						
 					}
