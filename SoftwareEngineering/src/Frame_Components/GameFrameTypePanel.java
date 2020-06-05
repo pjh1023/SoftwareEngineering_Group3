@@ -238,25 +238,25 @@ public class GameFrameTypePanel extends JPanel{
 		
 		board = new ArrayList<Land>();
 		board.add(new Start("start", 800));
-		board.add(new City("HDH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("NTH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("NMH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("ANH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
+		board.add(new City("HDH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("NTH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("NMH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("ANH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
 		board.add(new Prison("천마지"));
-		board.add(new City("Bethel", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("Lothem", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("은혜", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("창조", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
+		board.add(new City("Bethel", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("Lothem", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("은혜", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("창조", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
 		board.add(new ChanceCard("Chance"));
-		board.add(new City("비전", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("오석", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("학생회관", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("갈대상자", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
+		board.add(new City("비전", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("오석", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("학생회관", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("갈대상자", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
 		board.add(new Travel("한동 한 바퀴"));
-		board.add(new City("에벤에셀", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("하용조관", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("반기문", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
-		board.add(new City("채플", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
+		board.add(new City("에벤에셀", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("하용조관", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("반기문", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("채플", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
 
 		pp = new ArrayList<PlayerPanel>();
 		for (int i=0;i<players.size();i++)
