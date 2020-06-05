@@ -9,6 +9,7 @@ public class Main {
 	
 	static String nickname;
 	public static void main(String[] args) {
+
 		int player  = (int) (Math.random()*100000000+1);
 		nickname = Integer.toString(player);
 		
@@ -16,5 +17,6 @@ public class Main {
 //		System.out.println(nickname);
 		
 		loginFrame.setThis();
+		
 	}
 }
