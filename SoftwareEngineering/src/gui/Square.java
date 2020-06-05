@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,58 +7,55 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-public class Square extends JPanel {
+import Frame.GameFrame;
+import backend.game.City;
+import backend.game.Land;
 
-	int number;
-	private String name;
+public class Square extends JButton {
+
+	private int number;
 	String description;
 	JLabel nameLabel;
 	static int totalSquares = 0;
-	private int price;
-	private int rentPrice;
-	public JPanel colorBox = new JPanel();
+	private ArrayList<JPanel> colorBoxes;
 	
-	public void setRentPrice(int rentPrice) {
-		this.rentPrice = rentPrice;
-	}
+	private Land land;
 	
 	public int getRentPrice() {
-		return rentPrice;
+		if (land instanceof City) {
+			City city = (City)land;
+			return city.getTollFee();
+		}
+		else
+			return -1;
 	}
-	
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	
-	public int getPrice() {
-		return price;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	
-	public Square(int xCoord, int yCoord, int width, int height, String labelString, int rotationDegrees) {
+	public Square(int xCoord, int yCoord, int width, int height, Land land, int rotationDegrees) {
 		number = totalSquares;
 		totalSquares++;
+		this.land = land;
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setBounds(xCoord, yCoord, width, height);
-		name = labelString;
 		this.setLayout(null);
+		this.colorBoxes = new ArrayList<JPanel>();
 		
-		this.add(colorBox);
-		colorBox.setBackground(Color.white);
-		colorBox.setBorder(new LineBorder(new Color(0, 0, 0)));
+		for (int i = 0; i < 4; i++) {
+			JPanel colorBox = new JPanel();
+			colorBoxes.add(colorBox);
+			this.add(colorBox);
+			colorBox.setBackground(Color.white);
+			colorBox.setBorder(new LineBorder(new Color(0, 0, 0)));
+		}
 
 		if(rotationDegrees == 0) {
-			nameLabel = new JLabel(labelString);
+			nameLabel = new JLabel(land.getName());
 			nameLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
 			nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			nameLabel.setBounds(0,20,this.getWidth(),20);
@@ -67,7 +63,7 @@ public class Square extends JPanel {
 		} else {	
 			// rotating a Jlabel: https://www.daniweb.com/programming/software-development/threads/390060/rotate-jlabel-or-image-in-label
 			
-			nameLabel = new JLabel(labelString) {
+			nameLabel = new JLabel(land.getName()) {
 				protected void paintComponent(Graphics g) {
 					Graphics2D g2 = (Graphics2D)g;
 					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -96,50 +92,48 @@ public class Square extends JPanel {
 			}
 			nameLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 9));
 			nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			
 			this.add(nameLabel);
 		} 
-
+		this.setBackground(new Color(230, 230, 230));
 	}
 
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		if(this.number == 1 || this.number == 3 || this.number == 4) {
-			colorBox.setBounds(0, this.getHeight()-20, this.getWidth(), 20);
-		}
-		if(this.number == 6 || this.number == 8 || this.number == 9) {
-			colorBox.setBounds(0, 0, 20, this.getHeight());
-		}
-		if(this.number == 11 || this.number == 13 || this.number == 14) {
-			colorBox.setBounds(0,0, this.getWidth(), 20);
-		}
-		if(this.number == 16 || this.number == 17 || this.number == 19) {
-			colorBox.setBounds(this.getWidth()-20, 0, 20, this.getHeight());
-		}
-	}
-
-	public void setBoxColor(int playerNumber) {
-		if(playerNumber ==1) {
-			colorBox.setBackground(Color.red);
-		}
-		else if(playerNumber ==2) {
-			colorBox.setBackground(Color.blue);
-		}
-		else if(playerNumber ==3) {
-			colorBox.setBackground(Color.green);
-		}
-		else if(playerNumber ==4) {
-			colorBox.setBackground(Color.yellow);
+		if (land instanceof City) {
+			if (this.number / 5 == 0) {
+				for (int i= 1; i<= colorBoxes.size(); i++)
+					colorBoxes.get(i-1).setBounds(0, this.getHeight() - 20, this.getWidth() * i/ colorBoxes.size(), 20 );
+					
+				//colorBox.setBounds(0, this.getHeight()-20, this.getWidth(), 20);
+			}
+			else if (this.number/ 5 == 1) {
+				for (int i= 1; i<= colorBoxes.size(); i++)
+					colorBoxes.get(i-1).setBounds(0, 0, 20, this.getHeight() * i/ colorBoxes.size() );
+				//colorBox.setBounds(0, 0, 20, this.getHeight());
+			}
+			else if (this.number / 5 == 2) {
+				for (int i= 1; i<= colorBoxes.size(); i++)
+					colorBoxes.get(i-1).setBounds(0, 0, this.getWidth() * i/ colorBoxes.size(), 20 );
+				//colorBox.setBounds(0,0, this.getWidth(), 20);
+			}
+			else {
+				for (int i= 1; i<= colorBoxes.size(); i++)
+					colorBoxes.get(i-1).setBounds(this.getWidth()-20, 0, 20, this.getHeight() * i/ colorBoxes.size() );
+				//colorBox.setBounds(this.getWidth()-20, 0, 20, this.getHeight());
+			}
 		}
 	}
 
-	private boolean isRentPaid = false;
-	public boolean isRentPaid() {
-		return isRentPaid;
+	public void setBoxColor(int pNum) {
+		if (land instanceof City) {
+			City c = (City)land;
+			if (pNum >= 0) 
+				colorBoxes.get(c.getLevel()).setBackground(GameFrame.COLORS[pNum] );
+		}
 	}
-	public void setRentPaid(boolean pay) {
-		isRentPaid = pay;
+	public int getNumber() {
+		return this.number;
 	}
 
 }

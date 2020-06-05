@@ -5,23 +5,29 @@ public abstract class Player implements Economic{
 	private int doubleCount;
 	private int prisonCount;
 	private int position;
+	private String name;
 	
 	abstract public int rollDice();
 	abstract public boolean wish2trade(int landNum);
 	abstract public int where2go();
 	abstract public int drawCard(int range);
 	
-	protected Player(int balance) {
+	protected Player(String name, int balance) {
+		this.name = name;
 		this.balance = balance;
 		this.doubleCount = 0;
 		this.prisonCount = 0;
 		this.position = 0;
 	}
 	
-	public boolean pay(Economic to, int amount) {
+	public String getName() {
+		return this.name;
+	}
+	
+	public int pay(Economic to, int amount) {
 		int sum = to.paid(amount);// balance -= to.paid(amount) ==> bug
 		balance -= sum;
-		return balance > 0;
+		return balance > 0?0:1;
 	}
 	
 	public int paid(int amount) {

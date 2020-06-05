@@ -10,11 +10,12 @@ public class Everyone implements Economic {
 	}
 
 	@Override
-	public boolean pay(Economic to, int amount) {
-		boolean result = true;
-		for (Player p : players) {
+	public int pay(Economic to, int amount) {
+		int result = 0;
+		for (int i = 0; i< players.size(); i++) {
+			Player p = players.get(i);
 			if (!p.isBankrupt())
-				result = p.pay(to, amount) && result;
+				result = (p.pay(to, amount) << i) | result;
 		}
 		return result;
 	}
