@@ -237,7 +237,7 @@ public class GameFrameTypePanel extends JPanel{
 		//players.add(new ConsolePlayer("P3", 15000));
 		
 		board = new ArrayList<Land>();
-		board.add(new Start("start", 200000));
+		board.add(new Start("start", 800));
 		board.add(new City("HDH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
 		board.add(new City("NTH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
 		board.add(new City("NMH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(1000, 2000, 3000)));
