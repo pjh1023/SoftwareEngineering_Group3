@@ -51,6 +51,10 @@ public class WaitingFrame extends JFrame implements ActionListener {
 	public static JLabel rank4 = new JLabel("_4_\tUSER\twins: 0 loses: 0 | win rate:  0%");
 	public static JLabel rank5 = new JLabel(".5.\tUSER\twins: 0 loses: 0 | win rate:  0%");
 	
+	public static JLabel myID = new JLabel("ID: User");
+	public static JLabel myNickName = new JLabel("Nickname: Nicky");
+	public static JLabel myRate = new JLabel("Wins: 0\tLoses: 0");
+	
 	public static GameFrame gameFrame = new GameFrame();
 	public static ChatFrame chatFrame = new ChatFrame();
 
@@ -98,8 +102,23 @@ public class WaitingFrame extends JFrame implements ActionListener {
         playInfoLabel.setSize(playInfoLabel.getPreferredSize().width, playInfoLabel.getPreferredSize().height);
         playInfoLabel.setLocation(100, 250);
         
-        layeredPane.add(playInfoLabel);
+        myID.setFont(bodyFont);
+        myID.setSize(myID.getPreferredSize());
+
+        myNickName.setFont(bodyFont);
+        myNickName.setSize(myNickName.getPreferredSize());
         
+        myRate.setFont(bodyFont);
+        myRate.setSize(myRate.getPreferredSize());
+        
+        
+        
+        layeredPane.add(playInfoLabel);
+        ////////////////////////////////////    수정 필요 
+        playInfoLabel.add(myID);
+        playInfoLabel.add(myNickName);
+        playInfoLabel.add(myRate);
+        ////////////////////////////////////
        
         
         

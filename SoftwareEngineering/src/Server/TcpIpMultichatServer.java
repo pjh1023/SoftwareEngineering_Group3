@@ -116,6 +116,7 @@ public class TcpIpMultichatServer {
 								sendToOne(mssg, rooms.get(this.roomNum).userV.get(i).socket);
 							}
 						}
+
 					}
 					else if(mssg.startsWith("[Ready]")) {
 						System.out.println(queue.size());
@@ -132,23 +133,27 @@ public class TcpIpMultichatServer {
 					}
 					else if(mssg.startsWith("[Login]")) {
 						String str[] = mssg.split(",");
-						sendToAll(str[0]+","+str[1]+","+loginCheck(str[2],str[3],socket.getInetAddress()+":"+socket.getPort()));
+						sendToOne(str[0]+","+Server.LoginDB.getUserID((String) str[2])+","+loginCheck(str[2],str[3],socket.getInetAddress()+":"+socket.getPort()), socket);
 					}
 					else if(mssg.startsWith("[IdCheck]")) {
 						String str[] = mssg.split(",");
-						sendToAll(str[0]+","+str[1]+","+idRedunCheck(str[2]));
+						sendToOne(str[0]+","+str[1]+","+idRedunCheck(str[2]), socket);
 					}
 					else if(mssg.startsWith("[NickCheck]")) {
 						String str[] = mssg.split(",");
-						sendToAll(str[0]+","+str[1]+","+nickRedunCheck(str[2]));
+						sendToOne(str[0]+","+str[1]+","+nickRedunCheck(str[2]), socket);
 					}
 					else if(mssg.startsWith("[Register]")) {
 						String str[] = mssg.split(",");
 						Object[] info = {str[2],str[3],str[4]};
-						sendToAll(str[0]+","+str[1]+","+signupUser(info));
+						sendToOne(str[0]+","+str[1]+","+signupUser(info), socket);
 					}
 					else if(mssg.startsWith("[TopRank]")) {
-						sendToAll(mssg+","+getTopRank());
+						sendToOne(mssg+","+getTopRank(), socket);
+					}
+					else if(mssg.startsWith("[Info]")) {
+						String str[] = mssg.split(",");
+						sendToOne(mssg+","+getInfo(str[2], Integer.parseInt(str[1])), socket);
 					}
 				}
 			} catch(IOException e) {}
@@ -188,5 +193,14 @@ public class TcpIpMultichatServer {
 		}
 		return toplist;
 	}
-	
+	public static String getInfo(String id, Integer userId) {
+		ArrayList<String> info = Server.LoginDB.getUserInfo(id);
+		ArrayList<Integer> rankInfo = Server.RankDB.getWinLose(userId);
+		String information = "";
+		for(int i=0; i<info.size(); i++)
+			information += (info.get(i)+"/");
+		for(int i=0; i<rankInfo.size(); i++)
+			information += (rankInfo.get(i)+"/");
+		return information;
+	}
 }

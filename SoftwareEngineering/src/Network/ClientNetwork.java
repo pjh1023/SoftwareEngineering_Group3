@@ -27,8 +27,8 @@ public class ClientNetwork {
 	
 	public void connect(String nickname) {
 		try {
-			String serverIp = "192.168.0.12"; 
-//			String serverIp = "172.17.152.54";
+//			String serverIp = "192.168.0.12";
+			String serverIp = "192.168.0.9";
 			Socket socket = new Socket(serverIp, 7778); //portNum
 			System.out.println("client connected");
 			Thread sender = new Thread(new ClientSender(socket, nickname)); 
@@ -119,7 +119,10 @@ public class ClientNetwork {
 							Frame.Main.waitingFrame = new Frame.WaitingFrame(); //대기방으로 넘어가기 
 							Frame.Main.waitingFrame.setThis();
 							
+							userID = Integer.parseInt(str[1]);
+							System.out.println("userID: "+userID);
 							ClientSender.sendMsg("[TopRank],"+Network.ClientNetwork.userID);
+							ClientSender.sendMsg("[Info],"+Network.ClientNetwork.userID+","+Frame_Components.LoginFramePanel.loginTypePanel.idTextF.getText());
 						}
 						else {
 //							System.out.println("login Failed");
@@ -202,6 +205,16 @@ public class ClientNetwork {
 							
 						}
 					}
+					else if(message.contains("[Info]")) {
+						System.out.println(message);
+						String str[] = message.split(",");
+						String inform[] = str[3].split("/"); // id/pw/nickname/wins/loses
+						Frame.WaitingFrame.myID.setText("ID:\t"+inform[0]);
+						Frame.WaitingFrame.myNickName.setText("Nickname:\t"+inform[2]);
+						Frame.WaitingFrame.myRate.setText("Wins:\t"+inform[3]+"\tLoses:\t"+inform[4]);
+					}
+					
+					
 					
 				}catch(IOException e) {}
 				
