@@ -21,6 +21,7 @@ public class ClientNetwork {
 	public static Socket socket;
 	boolean isReady;
 	public static int userID; 
+	public static String nickname;
 	
 	//sjb - 172.17.220.115 
 	//pjh- 192.168.0.9
@@ -111,7 +112,7 @@ public class ClientNetwork {
 					}
 					else if(message.contains("[Login]")) {
 						String str[] = message.split(",");
-						if(str[2].equals("true")) { //str[2] is id
+						if(str[3].equals("true")) { //str[2] is id
 							// login Success
 							Frame.Main.loginFrame.logPanel.setVisible(false);
 							Frame.Main.loginFrame.remove(Frame.Main.loginFrame.logPanel);
@@ -120,7 +121,8 @@ public class ClientNetwork {
 							Frame.Main.waitingFrame.setThis();
 							
 							userID = Integer.parseInt(str[1]);
-							System.out.println("userID: "+userID);
+							nickname = str[2];
+							System.out.println("userID: "+userID+"\tNickname: "+nickname);
 							ClientSender.sendMsg("[TopRank],"+Network.ClientNetwork.userID);
 							ClientSender.sendMsg("[Info],"+Network.ClientNetwork.userID+","+Frame_Components.LoginFramePanel.loginTypePanel.idTextF.getText());
 						}
