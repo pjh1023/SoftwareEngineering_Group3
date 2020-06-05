@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import Frame.GameFrame;
+import Network.ClientNetwork.ClientSender;
 import Network.ClientNetwork;
 import Network.User;
 import backend.game.BoundedBuffer;
@@ -115,6 +116,12 @@ public class GameFrameTypePanel extends JPanel{
 					}
 				}
 				else if (a instanceof Result) {
+					if (((Result)a).isDraw() || gm.getTurnPlayer() instanceof LocalPlayer) {
+						ClientSender.sendMsg("[Win],0,nick,");
+					}
+					else {
+						
+					}
 					stateArea.setText("Game End");
 					break;
 				}
