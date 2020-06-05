@@ -11,19 +11,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-
+import java.util.ArrayList;
 import Network.Room; 
 
 public class TcpIpMultichatServer {
 	public static HashMap clients;
-	static Vector<Room> roomV;
 	static Socket socket;
+	public static ArrayList<ServerReceiver> queue = new ArrayList<ServerReceiver>();
+	//serverReceiver가 portnum이랑 out 정보 가지고 있엉
 	
 	TcpIpMultichatServer(){
 		clients = new HashMap();
 		Collections.synchronizedMap(clients);
-		
-		roomV = new Vector<>();
 	}
 	
 	public void start() {
@@ -37,7 +36,9 @@ public class TcpIpMultichatServer {
 				socket = serverSocket.accept();
 				System.out.println("["+socket.getInetAddress()+":"+socket.getPort()+"]"+"에서 접속하였습니다.");
 				ServerReceiver thread = new ServerReceiver(socket, this);
+				
 				thread.start();
+				queue.add(thread); //client정보 queue에 담아
 			}
          
 		} catch(Exception e) {
@@ -51,7 +52,6 @@ public class TcpIpMultichatServer {
 			try {
 				DataOutputStream out = (DataOutputStream)clients.get(it.next());
 				out.writeUTF(msg);
-				//Frame.chating.append(msg);
 			}catch(IOException e) {}
 		}
 	}
@@ -75,13 +75,13 @@ public class TcpIpMultichatServer {
 		Socket socket;
 		DataInputStream in;
 		DataOutputStream out;
+		int roomNum;
 		
-		Room myRoom;
-		Vector<Room> roomV;
-		int count=0;
+		public static ArrayList<Room> rooms = new ArrayList<Room>();
+		
 		ServerReceiver(Socket socket, TcpIpMultichatServer server){
-			roomV = server.roomV;
 			this.socket = socket;
+			roomNum = -1;
 			
 			try {
 				in = new DataInputStream(socket.getInputStream());
@@ -109,27 +109,27 @@ public class TcpIpMultichatServer {
 					} //server에서 상황 모니터
 					
 					if(mssg.startsWith("[Msg]")) {
-						sendToAll(mssg);
+//						sendToAll(mssg);
 //						sendToOne(mssg, socket);
+						for(int i=0; i<4; i++) {
+							if (this.roomNum >= 0) {
+								sendToOne(mssg, rooms.get(this.roomNum).userV.get(i).socket);
+							}
+						}
+
 					}
 					else if(mssg.startsWith("[Ready]")) {
-						
-						String str[] = mssg.split(",");
-//						if(clients.size() %4 == 1) { // 1,5,9,13...
-//							myRoom = new Room(count++);
-//							for(int i=0; i<roomV.size(); i++) {
-//								Room r = roomV.get(i);
-//								if(r.roomNum == ) {
-//									myRoom = r;
-//									break;
-//								}
-//							}
-//					
-//							roomV.add(myRoom);
-//							myRoom.userV.add(this);
-//						}
-						
-//						sendToRoom("");
+						System.out.println(queue.size());
+						if(queue.size() % 4 == 0) {
+							Room room = new Room(queue.size()/4); //queue.size()/4 == roomNumber
+							rooms.add(room);
+							
+							for(int i=queue.size()-1; i>=queue.size()-4; i--) {
+								queue.get(i).roomNum = rooms.size() - 1;
+								room.userV.add(queue.get(i)); //portNum으로 client 가져왕 
+							}
+						}
+					
 					}
 					else if(mssg.startsWith("[Login]")) {
 						String str[] = mssg.split(",");
@@ -164,23 +164,6 @@ public class TcpIpMultichatServer {
 					System.out.println("현재 접속자수는 "+clients.size());
 				} 
 		} 
-		
-		public void sendToRoom(String msg) {
-			for(int i=0; i<myRoom.userV.size(); i++) {
-				ServerReceiver receiver = myRoom.userV.get(i);
-				try {
-					messageTo(msg);
-				} catch(IOException e) {
-					
-				}
-			}
-		}
-		public void messageTo(String msg) throws IOException{ //특정 client에게 전달 
-//			(DataOutputStream)clients.get(it.next());
-			OutputStream out = socket.getOutputStream();
-//			out.writeUTF(msg);
-			out.write((msg + "\n").getBytes());
-		}
 	}
 	
 
