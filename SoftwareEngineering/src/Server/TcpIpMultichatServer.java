@@ -144,7 +144,7 @@ public class TcpIpMultichatServer {
 						String str[] = mssg.split(",");
 						sendToOne(str[0]+","+str[1]+","+nickRedunCheck(str[2]), socket);
 					}
-					else if(mssg.startsWith("[Register]")) {
+					else if(mssg.startsWith("[Register]")) { 
 						String str[] = mssg.split(",");
 						Object[] info = {str[2],str[3],str[4]};
 						sendToOne(str[0]+","+str[1]+","+signupUser(info), socket);
