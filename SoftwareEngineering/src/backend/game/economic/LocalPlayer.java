@@ -1,16 +1,14 @@
 package backend.game.economic;
 
-import java.util.Scanner;
-
 import Frame_Components.GameFrameTypePanel;
 
 public class LocalPlayer extends Player {
-	private Scanner sc;
+	//private Scanner sc;
 	private GameFrameTypePanel panel;
 	
 	public LocalPlayer(String name, int balance, GameFrameTypePanel panel) {
 		super(name, balance);
-		sc = new Scanner(System.in);
+		//sc = new Scanner(System.in);
 		this.panel = panel;
 	}
 	
@@ -38,9 +36,9 @@ public class LocalPlayer extends Player {
 
 	@Override
 	public int where2go() {
-		//panel.enableLand(true);
+		panel.enableLand(true);
 		int choice = panel.getBuf().pop();
-		//panel.enableLand(false);
+		panel.enableLand(false);
 		return choice;
 	}
 
