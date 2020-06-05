@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import Frame.GameFrame;
+import Network.ClientNetwork;
+import Network.User;
 import backend.game.BoundedBuffer;
 import backend.game.ChanceCard;
 import backend.game.ChanceCardEvent;
@@ -28,9 +30,15 @@ import backend.game.Land;
 import backend.game.Prison;
 import backend.game.Start;
 import backend.game.Travel;
-import backend.game.action.*;
-import backend.game.economic.ConsolePlayer;
+import backend.game.action.Action;
+import backend.game.action.Bankrupt;
+import backend.game.action.Imprison;
+import backend.game.action.Release;
+import backend.game.action.Result;
+import backend.game.action.RollDice;
+import backend.game.action.Transaction;
 import backend.game.economic.LocalPlayer;
+import backend.game.economic.NetworkPlayer;
 import backend.game.economic.Player;
 import gui.Board;
 import gui.Dice;
@@ -38,6 +46,14 @@ import gui.Square;
 
 
 public class GameFrameTypePanel extends JPanel{
+	private ArrayList<User> users;
+	
+	public GameFrameTypePanel(ArrayList<User> users) {
+		super();
+		this.users = users;
+	}
+	
+	
 	public class RunGM implements Runnable {
 
 		@Override
@@ -205,10 +221,13 @@ public class GameFrameTypePanel extends JPanel{
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, "생활관 보증금 기부\n나도 모르는 사이에 300원을 기부하세요."));
 		
 		players = new ArrayList<Player>();
-		players.add(new LocalPlayer("Local", 15000, this));
-		players.add(new ConsolePlayer("P1", 15000));
-		players.add(new ConsolePlayer("P1", 15000));
-		players.add(new ConsolePlayer("P3", 15000));
+		players.add(new LocalPlayer(users.get(0).getNickname(), 15000, this, ClientNetwork.inBuf));
+		for (int i = 1; i< users.size(); i++)
+			players.add(new NetworkPlayer(users.get(i).getNickname(), 15000, ClientNetwork.outBuf));
+		
+		//players.add(new ConsolePlayer("P1", 15000));
+		//players.add(new ConsolePlayer("P1", 15000));
+		//players.add(new ConsolePlayer("P3", 15000));
 		
 		board = new ArrayList<Land>();
 		board.add(new Start("start", 200000));

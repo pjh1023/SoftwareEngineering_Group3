@@ -76,6 +76,7 @@ public class TcpIpMultichatServer {
 		DataOutputStream out;
 		int roomNum;
 		public int userID; 
+		public String aidi;
 		public String nickname;
 		
 		public static ArrayList<Room> rooms = new ArrayList<Room>();
@@ -128,8 +129,7 @@ public class TcpIpMultichatServer {
 							for(int i=queue.size()-1; i>=queue.size()-4; i--) {
 								queue.get(i).roomNum = rooms.size() - 1;
 								room.userV.add(queue.get(i)); //portNum으로 client 가져왕 
-				
-							}
+							} 
 							room.sendInfo();
 							room.decideTurn();
 						}
@@ -138,9 +138,17 @@ public class TcpIpMultichatServer {
 					else if(mssg.startsWith("[Login]")) { // receive format: [login],userID,nickname,id,pw
 						String str[] = mssg.split(",");
 						int usrID = Server.LoginDB.getUserID((String) str[3]);
-						sendToOne(str[0]+","+usrID+","+Server.LoginDB.getNickname(usrID)+","+loginCheck(str[3],str[4],socket.getInetAddress()+":"+socket.getPort()), socket);
-						nickname = str[3];
+						String nick = Server.LoginDB.getNickname(usrID);
+						sendToOne(str[0]+","+usrID+","+nick+","+loginCheck(str[3],str[4],socket.getInetAddress()+":"+socket.getPort()), socket);
+						aidi = str[3];
+						nickname = nick;
 						userID = usrID;
+					}
+					else if(mssg.startsWith("[Game]")) {
+						for (int i=0; i<rooms.get(this.roomNum).userV.size(); i++) {
+							if (rooms.get(roomNum).userV.get(i).socket != this.socket) 
+								sendToOne(mssg, rooms.get(roomNum).userV.get(i).socket);
+						}
 					}
 					else if(mssg.startsWith("[IdCheck]")) {
 						String str[] = mssg.split(",");

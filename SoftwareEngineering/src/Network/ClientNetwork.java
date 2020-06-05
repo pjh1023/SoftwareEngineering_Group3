@@ -12,6 +12,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import Frame.ChatFrame;
+import Frame_Components.GameFrameTypePanel.RunGM;
 import backend.game.BoundedBuffer;
 
 
@@ -23,11 +24,26 @@ public class ClientNetwork {
 	public static int userID; 
 	public static String nickname;
 	
-	private BoundedBuffer<Integer> inBuf;
-	private BoundedBuffer<Integer> outBuf;
+	public static BoundedBuffer<String> inBuf;
+	public static BoundedBuffer<Integer> outBuf;
+	
+	public static ArrayList<User> users;
 	
 	//sjb - 172.17.220.115 
 	//pjh- 192.168.0.9
+	
+	private class Loop implements Runnable{
+
+		@Override
+		public void run() {
+			while (true) {
+				String s = inBuf.pop();
+				ClientSender.sendMsg(s);
+			}
+			
+		}
+		
+	}
 	
 	public void connect(String nickname) {
 		try {
@@ -42,8 +58,11 @@ public class ClientNetwork {
 			
 			sender.start();
 			receiver.start();
-			inBuf = new BoundedBuffer<Integer>();
+			inBuf = new BoundedBuffer<String>();
 			outBuf = new BoundedBuffer<Integer>();
+			Loop loop = new Loop();
+			Thread thread = new Thread(loop, "network_thread");
+			thread.start();
 		} catch(ConnectException ce) {
 			ce.printStackTrace();
 		} catch(Exception e){}
@@ -130,6 +149,8 @@ public class ClientNetwork {
 							System.out.println("userID: "+userID+"\tNickname: "+nickname);
 							ClientSender.sendMsg("[TopRank],"+Network.ClientNetwork.userID);
 							ClientSender.sendMsg("[Info],"+Network.ClientNetwork.userID+","+Frame_Components.LoginFramePanel.loginTypePanel.idTextF.getText());
+							users = new ArrayList<>();
+							users.add(new User(userID, nickname));
 						}
 						else {
 //							System.out.println("login Failed");
@@ -223,19 +244,32 @@ public class ClientNetwork {
 					else if (message.startsWith("[Game]")) {
 						System.out.print(message);
 						String str[] = message.split(",");
-						outBuf.push(0);
+						outBuf.push(Integer.parseInt(str[1]));
 					}					
 					else if(message.contains("[Open]")) {
+						System.out.print(message);
+						String str[] = message.split(",");
+						
+						int n = Integer.parseInt(str[1]);
+						System.out.println(n);
+						
+						for (int i = 1; i < n; i++) {
+							users.add(new User(0, str[i + 1]));
+						}
+						
 						Frame.WaitingFrame.self.setVisible(false);
-						Frame.WaitingFrame.gameFrame.setThis();
+						//Frame.WaitingFrame.gameFrame.setThis(users);
 				    	
 						Frame.WaitingFrame.chatFrame.setThis();
 						Frame.WaitingFrame.chatFrame.setVisible(true);
 				    	
 				    	//chat Frame enable over here
-						Frame.WaitingFrame.gameFrame.setThis();
+						Frame.WaitingFrame.gameFrame.setThis(users);
 						Frame.WaitingFrame.chatFrame.setThis();
 						Frame.WaitingFrame.chatFrame.setVisible(true);
+						
+						
+						
 					}
 					
 				}catch(IOException e) {}
