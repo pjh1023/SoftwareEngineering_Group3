@@ -10,13 +10,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Network.ClientNetwork.ClientSender;
+
 public class LoginFramePanel extends JPanel implements ActionListener{
 	private Font headFont = new Font ("Arial", Font.BOLD, height / 15);
 	private Font buttonFont = new Font ("Arial", Font.BOLD, headFont.getSize() / 2);
 	
 	
 	private JLabel headLabel = new JLabel("Handong Marble", JLabel.CENTER);
-	private LoginFrameTypePanel loginTypePanel = new LoginFrameTypePanel(); // 실제 유저의 입력칸은 편의를 위해 따로 panel을 만들었습니다.
+	public static LoginFrameTypePanel loginTypePanel = new LoginFrameTypePanel(); // 실제 유저의 입력칸은 편의를 위해 따로 panel을 만들었습니다.
 	private JButton loginButton = new JButton();
 	private JButton joinButton = new JButton();
 		
@@ -67,19 +69,7 @@ public class LoginFramePanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().toString().contains("text=Login")) { // ActionEvent e를 통해서 행해진 action이 무엇인지 비교하고 해당 action을 수행하도록 합니다.
-			// login Success
-			Frame.Main.loginFrame.logPanel.setVisible(false);
-			Frame.Main.loginFrame.remove(Frame.Main.loginFrame.logPanel);
-			Frame.Main.loginFrame.dispose();
-			Frame.Main.waitingFrame = new Frame.WaitingFrame(); //대기방으로 넘어가기 
-			Frame.Main.waitingFrame.setThis();
-//			Frame.Main.loginFrame.add(Frame.Main.loginFrame.mainPanel);
-			
-			// login False
-//			else {
-//				DB.getInstance().updateCurrentWrongCount(mainClasses.MainController.mainFrame.logPanel.getLogInfoPanel().idTextF.getText());
-//				JOptionPane.showMessageDialog(null, "Wrong ID or PW!", "WARNING", JOptionPane.ERROR_MESSAGE);
-//			}
+			ClientSender.sendMsg("[Login],0,"+loginTypePanel.idTextF.getText()+","+String.valueOf(loginTypePanel.pwTextF.getPassword()));
 		}
 		else if (e.getSource().toString().contains("text=Join")) {
 			Frame.Main.signupFrame = new Frame.SignupFrame();

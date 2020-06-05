@@ -22,6 +22,7 @@ public class SignupFrameTypePanel extends JPanel{
 	
 	public static Font font = new Font ("Arial", Font.BOLD, Frame.SignupFrame.frameHeight / 30);
 	
+	
 	private void setLabels(){
 		for (JLabel label : labels) {
 			label.setFont(font);

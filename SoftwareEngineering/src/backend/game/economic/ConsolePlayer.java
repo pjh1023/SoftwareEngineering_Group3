@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class ConsolePlayer extends Player {
 	private Scanner sc;
 	
-	public ConsolePlayer(int balance) {
-		super(balance);
+	public ConsolePlayer(String name, int balance) {
+		super(name, balance);
 		sc = new Scanner(System.in);
 	}
 	

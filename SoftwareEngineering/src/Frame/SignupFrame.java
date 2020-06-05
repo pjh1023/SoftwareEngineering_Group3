@@ -1,6 +1,5 @@
 package Frame;
 
-import java.awt.Component;
 import javax.swing.JFrame;
 
 public class SignupFrame extends JFrame{
@@ -21,7 +20,8 @@ public class SignupFrame extends JFrame{
 		this.setLocation(startX, startY);
 		this.setSize(frameWidth, frameHeight);
 		this.setVisible(true);
-		signupPanel = new Frame_Components.SignupFramePanel();
+		signupPanel = new Frame_Components.SignupFramePanel(this);
 		getContentPane().add(signupPanel);
 	}
+	
 }

@@ -1,17 +1,20 @@
 package Frame;
 
-import backend.game.GameManager;
-
 public class Main {
 	public static LoginFrame loginFrame = new LoginFrame();
 	public static SignupFrame signupFrame;
 	public static WaitingFrame waitingFrame = new WaitingFrame();
-
-	public static GameFrame gameFrame = new GameFrame();
+  
+	static Network.ClientNetwork network = new Network.ClientNetwork();
 	
-	
+	static String nickname;
 	public static void main(String[] args) {
-		//loginFrame.setThis();
-		GameManager.test();
+		int player  = (int) (Math.random()*100000000+1);
+		nickname = Integer.toString(player);
+		
+		network.connect(nickname);
+//		System.out.println(nickname);
+		
+		loginFrame.setThis();
 	}
 }

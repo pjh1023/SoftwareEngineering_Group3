@@ -33,4 +33,7 @@ public class ChanceCardEvent {
 	public int getAmount() {
 		return amount;
 	}
+	public String getDiscription() {
+		return this.discription;
+	}
 }
