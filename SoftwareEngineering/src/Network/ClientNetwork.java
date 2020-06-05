@@ -31,8 +31,8 @@ public class ClientNetwork {
 	
 	public void connect(String nickname) {
 		try {
-			String serverIp = "192.168.0.12";
-//			String serverIp = "192.168.0.9";
+//			String serverIp = "192.168.0.12";
+			String serverIp = "192.168.0.9";
 			Socket socket = new Socket(serverIp, 7778); //portNum
 			System.out.println("client connected");
 			Thread sender = new Thread(new ClientSender(socket, nickname)); 
@@ -194,19 +194,19 @@ public class ClientNetwork {
 							String inform[] = top5.get(i).split("/");
 							switch(i) {
 							case 0:
-								Frame.WaitingFrame.rank1.setText("*1*\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								Frame.WaitingFrame.rank1.setText("1st | "+inform[0]+"\t"+inform[1]+"승\t"+inform[2]+"패\t승률 : "+(Double.parseDouble(inform[3])*100)+"%");
 								break;
 							case 1:
-								Frame.WaitingFrame.rank2.setText("=2=\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								Frame.WaitingFrame.rank2.setText("2nd | "+inform[0]+"\t"+inform[1]+"승\t"+inform[2]+"패\t승률 : "+(Double.parseDouble(inform[3])*100)+"%");
 								break;
 							case 2:
-								Frame.WaitingFrame.rank3.setText("+3+\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								Frame.WaitingFrame.rank3.setText("3rd | "+inform[0]+"\t"+inform[1]+"승\t"+inform[2]+"패\t승률 : "+(Double.parseDouble(inform[3])*100)+"%");
 								break;
 							case 3:
-								Frame.WaitingFrame.rank4.setText("-4-\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								Frame.WaitingFrame.rank4.setText("4th | "+inform[0]+"\t"+inform[1]+"승\t"+inform[2]+"패\t승률 : "+(Double.parseDouble(inform[3])*100)+"%");
 								break;
 							case 4:
-								Frame.WaitingFrame.rank5.setText(".5.\t"+inform[0]+"\tWins:"+inform[1]+"\tLoses:"+inform[2]+"\tWin Rate:"+inform[3]+"%");
+								Frame.WaitingFrame.rank5.setText("5th | "+inform[0]+"\t"+inform[1]+"승\t"+inform[2]+"패\t승률 : "+(Double.parseDouble(inform[3])*100)+"%");
 								break;
 							}
 							
