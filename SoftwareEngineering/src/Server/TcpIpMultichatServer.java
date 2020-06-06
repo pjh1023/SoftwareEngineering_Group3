@@ -112,7 +112,7 @@ public class TcpIpMultichatServer {
 					if(mssg.startsWith("[Msg]")) {
 //						sendToAll(mssg);
 //						sendToOne(mssg, socket);
-						for(int i=0; i<4; i++) {
+						for(int i=0; i<rooms.get(this.roomNum).userV.size(); i++) {
 							if (this.roomNum >= 0) {
 								sendToOne(mssg, rooms.get(this.roomNum).userV.get(i).socket);
 							}
@@ -122,11 +122,11 @@ public class TcpIpMultichatServer {
 					else if(mssg.startsWith("[Ready]")) {
 						queue.add(this); //client정보 queue에 담아
 						System.out.println(queue.size());
-						if(queue.size() % 4 == 0) {
-							Room room = new Room(queue.size()/4); //queue.size()/4 == roomNumber
+						if(queue.size() % 2 == 0) {
+							Room room = new Room(queue.size()/2); //queue.size()/4 == roomNumber
 							rooms.add(room);
 							
-							for(int i=queue.size()-1; i>=queue.size()-4; i--) {
+							for(int i=queue.size()-1; i>=queue.size()-2; i--) {
 								queue.get(i).roomNum = rooms.size() - 1;
 								room.userV.add(queue.get(i)); //portNum으로 client 가져왕 
 							} 
