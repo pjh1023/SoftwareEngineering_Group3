@@ -15,14 +15,15 @@
 
 ### User Requirements
 
-1) Handong Marble will have default theme as HGU campus
-  - Naming of items (such as map, event territories) should be familiar to HGU students
-2) Freshman of Handong who does not know the school, due to COVID-19, may experience and get to know the campus better including the culture of HGU
-3) Users should be able to roll the dice and move
-4) Users can buy/sell territories
-5) There should be an event card section that triggers diverse events
-6) There should be a Prison system that holds the player for 3 turns
-7) Players can communicate with other players while playing game
+1)  Handong Marble will have default theme as HGU campus
+    - Naming of items (such as map, event territories) should be familiar to HGU students
+2)  Freshman of Handong who does not know the school, due to COVID-19,
+    may experience and get to know the campus better including the culture of HGU
+3)  Users should be able to roll the dice and move
+4)  Users can buy/sell territories
+5)  There should be an event card section that triggers diverse events
+6)  There should be a Prison system that holds the player for 3 turns
+7)  Players can communicate with other players while playing game
 
 
 <br/>
