@@ -8,8 +8,8 @@
 ## Introduction
 방가방가
 
-<p align="left"><img width="48%" src="readmeIMG/WaitingFrame.png" /></p>
-<p align="right"><img width="48%" src="readmeIMG/GameFrame.png" /></p>
+<p align="left"><img width="48%" src="readmeIMG/WaitingFrame.png" />
+<img width="48%" src="readmeIMG/GameFrame.png" /></p>
 
 ### Project Summary
 
