@@ -123,6 +123,11 @@ public class GameFrameTypePanel extends JPanel{
 						ClientSender.sendMsg("[Lose],"+Network.ClientNetwork.userID+","+Network.ClientNetwork.nickname);
 					}
 					stateArea.setText("Game End");
+					Frame.GameFrame.self.dispose();
+					Frame.WaitingFrame.self.setVisible(true);
+					Frame.WaitingFrame.readyButton.setVisible(true);
+					Frame.WaitingFrame.loadingButton.setVisible(false);
+					
 					break;
 				}
 //				repaint();			

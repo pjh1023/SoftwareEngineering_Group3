@@ -68,8 +68,8 @@ public class WaitingFrame extends JFrame implements ActionListener {
     BufferedImage img = null;
     JTextField loginTextField;
     JPasswordField passwordField;
-    JButton readyButton;
-    JButton loadingButton;
+    public static JButton readyButton;
+    public static JButton loadingButton;
     ImageIcon icon;
     ImageIcon loadingIcon;
     Image tempimg;
