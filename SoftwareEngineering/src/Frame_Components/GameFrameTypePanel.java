@@ -118,9 +118,20 @@ public class GameFrameTypePanel extends JPanel{
 				else if (a instanceof Result) {
 					if (((Result)a).isDraw() || gm.getTurnPlayer() instanceof LocalPlayer) {
 						ClientSender.sendMsg("[Win],"+Network.ClientNetwork.userID+","+Network.ClientNetwork.nickname);
+						stateArea.setText("Game End\n'" + gm.getTurnPlayer().getName()+"' won :)" );
 					}
 					else {
 						ClientSender.sendMsg("[Lose],"+Network.ClientNetwork.userID+","+Network.ClientNetwork.nickname);
+						for (int i=0; i<players.size();i++){
+							if (players.get(i).getBalance() > 0)
+								stateArea.setText("Game End\n'" + players.get(i).getName()+"' won :)" );
+						}
+					}
+					repaint();
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 					stateArea.setText("Game End");
 					repaint();
@@ -232,11 +243,11 @@ public class GameFrameTypePanel extends JPanel{
 		random = new Random();
 		
 		deck = new ArrayList<ChanceCardEvent>();
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 300, "장학금 선정\n오 예! 장학금300원을 받으세요."));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 800, "아 미안 카드를 안 들고 왔네\n친구 대신 버스 카드를 찍어 주세요."));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 300, "삥뜯기\n돈이 가장 많은 친구에게 300원을 삥뜯습니다."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Bank, ChanceCardEvent.Direction.Self, 3000, "장학금 선정\n오 예! 장학금3000원을 받으세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Last, 1600, "아 미안 카드를 안 들고 왔네\n친구 대신 버스 카드를 찍어 주세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.First, ChanceCardEvent.Direction.Self, 1500, "삥뜯기\n돈이 가장 많은 친구에게 1500원을 삥뜯습니다."));
 		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Everyone, ChanceCardEvent.Direction.Self, 3000, "한동만나\n친구들의 도움으로 학식을 먹습니다."));
-		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 300, "생활관 보증금 기부\n나도 모르는 사이에 300원을 기부하세요."));
+		deck.add(new ChanceCardEvent(ChanceCardEvent.Direction.Self, ChanceCardEvent.Direction.Everyone, 1500, "생활관 보증금 기부\n나도 모르는 사이에 1500원을 기부하세요."));
 		
 		players = new ArrayList<Player>();
 		players.add(new LocalPlayer(users.get(0).getNickname(), 15000, this, ClientNetwork.inBuf));
@@ -248,26 +259,26 @@ public class GameFrameTypePanel extends JPanel{
 		//players.add(new ConsolePlayer("P3", 15000));
 		
 		board = new ArrayList<Land>();
-		board.add(new Start("start", 800));
-		board.add(new City("HDH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("NTH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("NMH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("ANH", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new Start("start", 1600)); //셔틀버스 왕복비
+		board.add(new City("HDH", Arrays.asList(3000, 6000, 9000, 12000), Arrays.asList(2000, 4000, 6000, 8000)));
+		board.add(new City("NTH", Arrays.asList(3000, 6000, 9000, 12000), Arrays.asList(2000, 4000, 6000, 8000)));
+		board.add(new City("NMH", Arrays.asList(3000, 6000, 9000, 12000), Arrays.asList(2000, 4000, 6000, 8000)));
+		board.add(new City("ANH", Arrays.asList(3000, 6000, 9000, 12000), Arrays.asList(2000, 4000, 6000, 8000)));
 		board.add(new Prison("천마지"));
-		board.add(new City("Bethel", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("Lothem", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("은혜", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("창조", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("Bethel", Arrays.asList(4000, 8000, 12000, 160000), Arrays.asList(3000, 6000, 9000, 12000)));
+		board.add(new City("Lothem", Arrays.asList(4000, 8000, 12000, 160000), Arrays.asList(3000, 6000, 9000, 12000)));
+		board.add(new City("은혜", Arrays.asList(4000, 8000, 12000, 160000), Arrays.asList(3000, 6000, 9000, 12000)));
+		board.add(new City("창조", Arrays.asList(4000, 8000, 12000, 160000), Arrays.asList(3000, 6000, 9000, 12000)));
 		board.add(new ChanceCard("Chance"));
-		board.add(new City("비전", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("오석", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("학생회관", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("갈대상자", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("비전", Arrays.asList(5000, 10000, 15000, 20000), Arrays.asList(4000, 8000, 12000, 16000)));
+		board.add(new City("오석", Arrays.asList(5000, 10000, 15000, 20000), Arrays.asList(4000, 8000, 12000, 16000)));
+		board.add(new City("학생회관", Arrays.asList(5000, 10000, 15000, 20000), Arrays.asList(4000, 8000, 12000, 16000)));
+		board.add(new City("갈대상자", Arrays.asList(5000, 10000, 15000, 20000), Arrays.asList(4000, 8000, 12000, 16000)));
 		board.add(new Travel("한동 한 바퀴"));
-		board.add(new City("에벤에셀", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("하용조관", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("반기문", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
-		board.add(new City("채플", Arrays.asList(10000, 20000, 30000, 400000), Arrays.asList(100000, 2000, 3000)));
+		board.add(new City("에벤에셀", Arrays.asList(6000, 12000, 18000, 24000), Arrays.asList(5000, 10000, 15000, 20000)));
+		board.add(new City("하용조관", Arrays.asList(6000, 12000, 18000, 24000), Arrays.asList(5000, 10000, 15000, 20000)));
+		board.add(new City("반기문", Arrays.asList(6000, 12000, 18000, 24000), Arrays.asList(5000, 10000, 15000, 20000)));
+		board.add(new City("채플", Arrays.asList(6000, 12000, 18000, 24000), Arrays.asList(5000, 10000, 15000, 20000)));
 
 		pp = new ArrayList<PlayerPanel>();
 		for (int i=0;i<players.size();i++)
