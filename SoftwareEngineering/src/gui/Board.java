@@ -133,20 +133,20 @@ public class Board extends JPanel {
 
 		JLabel lblMonopoly = new JLabel("HGUMARBLE"){
 			protected void paintComponent(Graphics g) {
-//				Graphics2D g2 = (Graphics2D)g;
-//				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//						RenderingHints.VALUE_ANTIALIAS_ON);
-//				AffineTransform aT = g2.getTransform();
-//				Shape oldshape = g2.getClip();
-//				double x = getWidth()/2.0;
-//				double y = getHeight()/2.0;
-//				aT.rotate(Math.toRadians(-35), x, y);
-//				g2.setTransform(aT);
-//				g2.setClip(oldshape);
-				Graphics2D g2d = (Graphics2D) g;
-		        int w2 = getWidth() / 2;
-		        int h2 = getHeight() / 2;
-		        g2d.rotate( Math.PI*1/3, w2, h2);
+				Graphics2D g2 = (Graphics2D)g;
+				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+						RenderingHints.VALUE_ANTIALIAS_ON);
+				AffineTransform aT = g2.getTransform();
+				Shape oldshape = g2.getClip();
+				double x = getWidth()/2.0;
+				double y = getHeight()/2.0;
+				aT.rotate(Math.toRadians(-145), x, y);
+				g2.setTransform(aT);
+				g2.setClip(oldshape);
+//				Graphics2D g2d = (Graphics2D) g;
+//		        int w2 = getWidth() / 2;
+//		        int h2 = getHeight() / 2;
+//		        g2d.rotate( Math.PI*1/3, w2, h2);
 				super.paintComponent(g);
 			}
 		};
