@@ -133,6 +133,13 @@ public class GameFrameTypePanel extends JPanel{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					stateArea.setText("Game End");
+					repaint();
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					Frame.GameFrame.self.dispose();
 					Frame.WaitingFrame.self.setVisible(true);
 					Frame.WaitingFrame.readyButton.setVisible(true);
