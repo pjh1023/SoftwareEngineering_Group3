@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -67,5 +68,21 @@ public class PlayerTest {
 		p1.imprison();
 		p1.imprison();
 		assertTrue(!p1.isImprisoned());
+	}
+	@Test
+	public void LoginDBtest() {
+		boolean nickname = Server.LoginDB.checkRedundantNick("톨희111");
+		assertTrue(nickname);
+		
+		boolean id = Server.LoginDB.checkRedundantId("test");
+		assertTrue(id);
+		
+		boolean login = Server.LoginDB.checkLogin("test0", "00", "192.168.0.1");
+		assertTrue(login);
+	}
+	@Test
+	public void RankDBtest() {
+		int totalPlay = Server.RankDB.getTotalPlay(22);
+		assertTrue(totalPlay == 0);
 	}
 }
