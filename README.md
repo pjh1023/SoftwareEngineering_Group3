@@ -83,4 +83,4 @@ $ java -jar HGUmarble.jar
 
 ### * Reference
 --------------------------------------------------------------------------------
-opensource(?)를 활용하였습니다.
+GUI 참고 출처: https://github.com/limoneren/Monopoly-Game-Prototype 
