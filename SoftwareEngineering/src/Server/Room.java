@@ -17,10 +17,10 @@ public class Room {
 	
 	public void sendInfo() {
 		// 다른멤버 닉네임 보내주기 
-		for(int i=0; i<4; i++) {
+		for(int i=0; i<userV.size(); i++) {
 			String msg = "[Open],";
 			msg += userV.size();
-			for (int j=0;j<4;j++) {
+			for (int j=0;j<userV.size();j++) {
 				if (i != j)
 					msg += "," + userV.get(j).nickname; 
 			}
@@ -47,8 +47,8 @@ public class Room {
 		Collections.shuffle(order);
 		
 		//send
-		for(int i=0; i<4; i++) {
-			for (int j=0;j<4;j++) {
+		for(int i=0; i<userV.size(); i++) {
+			for (int j=0;j<userV.size();j++) {
 				if (i != j)
 					TcpIpMultichatServer.sendToOne("[Game]," + order.get(j), userV.get(i).socket);
 			}
