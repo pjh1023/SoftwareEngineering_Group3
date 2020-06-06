@@ -61,7 +61,7 @@ public class GameFrameTypePanel extends JPanel{
 		public void run() {
 			while(true) {
 				try {
-					Thread.sleep(100);
+					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -123,6 +123,12 @@ public class GameFrameTypePanel extends JPanel{
 						ClientSender.sendMsg("[Lose],"+Network.ClientNetwork.userID+","+Network.ClientNetwork.nickname);
 					}
 					stateArea.setText("Game End");
+					repaint();
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					Frame.GameFrame.self.dispose();
 					Frame.WaitingFrame.self.setVisible(true);
 					Frame.WaitingFrame.readyButton.setVisible(true);
@@ -130,7 +136,7 @@ public class GameFrameTypePanel extends JPanel{
 					
 					break;
 				}
-//				repaint();			
+				repaint();			
 			}
 		}	
 	}
