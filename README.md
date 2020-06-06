@@ -1,5 +1,5 @@
 # SoftwareEngineering_Group3
-조원: 박범준, 조경민, 박준혁
+조원: 김혜원, 김윤정, 이찬혁, 박준혁, 송진범
 
 #HGU marble
 --------------------------------------------------------------------------------
@@ -9,7 +9,7 @@
 방가방가
 
 <p align="left"><img width="48%" src="readmeIMG/WaitingFrame.png" />
-<img width="30%" src="readmeIMG/GameFrame.png" /></p>
+<img width="33%" src="readmeIMG/GameFrame.png" /></p>
 
 ### Project Summary
 
@@ -24,11 +24,7 @@
 
 
 ## Dependencies
-
-* [Python 3.5+](https://www.continuum.io/downloads)
-* [PyTorch 0.4.0+](http://pytorch.org/)
-* [TensorFlow 1.3+](https://www.tensorflow.org/) (optional for tensorboard)
-
+* [java version "11.0.6"] 이상
 
 <br/>
 
@@ -39,28 +35,18 @@
 * 코드 설명
 * 실행방법
 
-* Project Data (Google Drive)
-  - 코드
-  - pretrained model
-  - 데이터집합
-* 프로젝트 유튜브영상 링크
-  - https://youtu.be/qndhOzTewk0 (video 1)
-  - https://youtu.be/W8OTKgyiabc (video 2)
-
-
-
 <br/>
 
 
 ## Usage
 
-### Step 1. Download the full file
-This google share drive includes all codes and data<br/>
-Available for HGU students only (access through @handong.edu account)<br/>
-해당 구글 드라이브는 모든 코드와 데이터를 포함하고있습니다.<br/>
-한동대학교 학생들만 접근 가능합니다. (학교 계정으로 접속해주시기 바랍니다.)
+### Step 1. Download the release file
+You can download the whole repository for entire code.<br/>
+In case of simple execution of game, just download the release file.<br/>
+모든 코드를 보기 위해서는 해당 repository를 다운로드 하시고, 단순히 게임 실행을 원한다면 release 파일을 다운로드하세요.<br/>
+
 ```bash
-https://drive.google.com/drive/folders/14al3QKQjvuurVd-RkFSgdB8SneiFQod2?usp=sharing
+https://github.com/pjh1023/SoftwareEngineering_Group3/tree/master/release
 ```
 
 <br/>
@@ -68,26 +54,17 @@ https://drive.google.com/drive/folders/14al3QKQjvuurVd-RkFSgdB8SneiFQod2?usp=sha
 ### Step 2. Environment setting
 Download the dependencies suggested above.<br/>
 위에 명시된 dependencies를 다운받아주세요. (환경설정 해주기)<br/>
-(anaconda가 설치되어있는 상태를 가정함)
 
-================== Mac ==================
-1. activate 가상환경이름 - (conda 가상환경에서 설치하려면 / optional)
-2. brew install wget
-3. conda install pytorch torchvision -c pytorch
-4. pip install tensorflow
 
-================== Windows ==================
-1. activate 가상환경이름 - (conda 가상환경에서 설치하려면 / optional)
-2. conda install pytorch
-3. pip install torchvision
-4. pip install tensorflow
 
 <br/>
 
-### Step 3. Run pretrained model (test)
+### Step 3. Run HGUmarble.jar file
+After downloading the release file, enter the directory of the file in cmd/terminal and do the following.<br/>
+배포 파일을 다운받은 후, cmd/terminal에서 해당 디렉토리로 이동하고 다음을 실행합니다.<br/>
 
 ```bash
-$ python main.py --mode test --dataset CelebA --image_size 256 --selected_attrs Black_Hair Blond_Hair Brown_Hair Male Young --model_save_dir=stargan_celeba_256/models --result_dir=stargan_celeba_256/results
+$ java -jar HGUmarble.jar
 ```
 
 
@@ -98,4 +75,4 @@ $ python main.py --mode test --dataset CelebA --image_size 256 --selected_attrs 
 
 ### * Reference
 --------------------------------------------------------------------------------
-본 프로젝트는 Yunjey Choi, Minje Choi1, Munyoung Kim, Jung-Woo Ha, Sunghun Kim, Jaegul Choo, "StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation", arXiv:1711.09020v3 [cs.CV] 21 Sep 2018 의 논문과 그 Official implementation을 참고하여 진행하였습니다.
+opensource(?)를 활용하였습니다.
