@@ -1,23 +1,28 @@
 # SoftwareEngineering_Group3
 조원: 김혜원, 김윤정, 이찬혁, 박준혁, 송진범
 
-#HGU marble
+# HGU marble
 --------------------------------------------------------------------------------
 
 
 ## Introduction
-방가방가
+본 프로젝트는 소프트웨어공학 수업의 팀프로젝트로 진행되었습니다.<br/>
+코로나19로 인하여 한동에 오지 못한 새내기들과 편입생을 위해, 간략한 한동의 모습을 담은 부루마블 게임을 기획하였습니다.<br/>
+
 
 <p align="left"><img width="48%" src="readmeIMG/WaitingFrame.png" />
 <img width="33%" src="readmeIMG/GameFrame.png" /></p>
 
-### Project Summary
+### User Requirements
 
-1) 논문 저자들이 제공한 pretrained model 파일을 활용하여 다양한 응용의 weight 등의 정보를 사용한다.
-
-2) 각 응용에 대한 정보를 활용하기 위하여 input 영상의 size 조절, 인물 위치 등 제약조건을 만족시켜 준다.
-
-2) User에게서 입력받은 영상을 기준으로 다양한 응용에 대한 결과 영상을 생성한다.
+1) Handong Marble will have default theme as HGU campus
+  - Naming of items (such as map, event territories) should be familiar to HGU students
+2) Freshman of Handong who does not know the school, due to COVID-19, may experience and get to know the campus better including the culture of HGU
+3) Users should be able to roll the dice and move
+4) Users can buy/sell territories
+5) There should be an event card section that triggers diverse events
+6) There should be a Prison system that holds the player for 3 turns
+7) Players can communicate with other players while playing game
 
 
 <br/>
@@ -31,7 +36,6 @@
 
 ## Project contents
 
-* 이론 설명
 * 코드 설명
 * 실행방법
 
@@ -55,6 +59,9 @@ https://github.com/pjh1023/SoftwareEngineering_Group3/tree/master/release
 Download the dependencies suggested above.<br/>
 위에 명시된 dependencies를 다운받아주세요. (환경설정 해주기)<br/>
 
+```bash
+java 11.0 이상 다운로드 예시: https://jhnyang.tistory.com/224
+```
 
 
 <br/>
